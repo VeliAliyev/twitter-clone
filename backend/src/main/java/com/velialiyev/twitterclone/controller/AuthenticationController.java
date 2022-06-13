@@ -1,5 +1,8 @@
 package com.velialiyev.twitterclone.controller;
 
+import com.velialiyev.twitterclone.dto.LoginRequestDto;
+import com.velialiyev.twitterclone.dto.LoginResponseDto;
+import com.velialiyev.twitterclone.dto.LogoutRequestDto;
 import com.velialiyev.twitterclone.dto.SignUpRequestDto;
 import com.velialiyev.twitterclone.service.AuthenticationService;
 import lombok.AllArgsConstructor;
@@ -23,4 +26,15 @@ public class AuthenticationController {
         this.authenticationService.signup(signUpRequestDto);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
+        return ResponseEntity.ok().body(this.authenticationService.login(loginRequestDto));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<HttpStatus> logout(@RequestBody LogoutRequestDto logoutRequestDto){
+        this.authenticationService.logout(logoutRequestDto);
+        return ResponseEntity.ok().build();
+    };
 }
