@@ -7,6 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogoutRequestDto {
+public class RefreshTokenDto {
     private String refreshToken;
+    private String email;
 }

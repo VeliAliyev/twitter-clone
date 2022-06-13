@@ -30,7 +30,7 @@ public class JwtService {
         return generateTokenWithUsername(principal.getUsername());
     }
 
-    private String generateTokenWithUsername(String username) {
+    public String generateTokenWithUsername(String username) {
         JwtClaimsSet claimsSet = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(Instant.now())

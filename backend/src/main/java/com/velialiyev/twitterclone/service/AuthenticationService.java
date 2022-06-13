@@ -1,9 +1,8 @@
 package com.velialiyev.twitterclone.service;
 
-import com.nimbusds.jose.proc.SecurityContext;
 import com.velialiyev.twitterclone.dto.LoginRequestDto;
 import com.velialiyev.twitterclone.dto.LoginResponseDto;
-import com.velialiyev.twitterclone.dto.LogoutRequestDto;
+import com.velialiyev.twitterclone.dto.RefreshTokenDto;
 import com.velialiyev.twitterclone.dto.SignUpRequestDto;
 import com.velialiyev.twitterclone.entity.UserEntity;
 import com.velialiyev.twitterclone.repository.UserRepository;
@@ -48,8 +47,18 @@ public class AuthenticationService {
                 .build();
     }
 
-    public void logout(LogoutRequestDto logoutRequestDto){
-        jwtService.deleteRefreshToken(logoutRequestDto.getRefreshToken());
+    public void logout(RefreshTokenDto refreshTokenDto){
+        jwtService.deleteRefreshToken(refreshTokenDto.getRefreshToken());
         SecurityContextHolder.clearContext();
+    }
+
+    public LoginResponseDto refreshToken(RefreshTokenDto refreshTokenDto){
+        this.jwtService.validateRefreshToken(refreshTokenDto.getRefreshToken());
+        String accessToken = this.jwtService.generateTokenWithUsername(refreshTokenDto.getEmail());
+        return LoginResponseDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshTokenDto.getRefreshToken())
+                .username(refreshTokenDto.getEmail())
+                .build();
     }
 }
