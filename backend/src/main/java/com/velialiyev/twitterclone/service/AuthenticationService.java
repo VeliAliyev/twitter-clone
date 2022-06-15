@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -60,5 +61,11 @@ public class AuthenticationService {
                 .refreshToken(refreshTokenDto.getRefreshToken())
                 .username(refreshTokenDto.getEmail())
                 .build();
+    }
+
+    public UserEntity getUserFromJwt(){
+        Jwt principal = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return userRepository.findByEmail(principal.getSubject()).orElseThrow();
     }
 }
