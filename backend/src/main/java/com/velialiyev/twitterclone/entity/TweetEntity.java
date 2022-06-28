@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class TweetEntity extends BaseTweetEntity{
 
-    @OneToMany(mappedBy = "tweet",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "tweet",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<ReplyEntity> replies;
 }
