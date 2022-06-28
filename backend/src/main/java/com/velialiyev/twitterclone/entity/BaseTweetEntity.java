@@ -1,11 +1,15 @@
 package com.velialiyev.twitterclone.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @SuperBuilder
 @MappedSuperclass
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class BaseTweetEntity {
 
     @Id
