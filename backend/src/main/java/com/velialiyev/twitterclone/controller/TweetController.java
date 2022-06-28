@@ -11,15 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tweet")
 @RequiredArgsConstructor
 public class TweetController {
 
     private final TweetService tweetService;
 
-    @PostMapping("/create")
+    @PostMapping("/tweet")
     private ResponseEntity<HttpStatus> tweet(@RequestBody TweetDto tweetDto){
         this.tweetService.tweet(tweetDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/reply")
+    private ResponseEntity<HttpStatus> reply(@RequestBody TweetDto tweetDto){
+        this.tweetService.reply(tweetDto);
         return ResponseEntity.ok().build();
     }
 
