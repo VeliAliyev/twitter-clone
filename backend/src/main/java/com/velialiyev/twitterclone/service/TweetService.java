@@ -8,6 +8,7 @@ import com.velialiyev.twitterclone.repository.ReplyRepository;
 import com.velialiyev.twitterclone.repository.TweetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class TweetService {
     private final ReplyRepository replyRepository;
     private final AuthenticationService authenticationService;
 
+    @Transactional
     public void tweet(TweetDto tweetDto){
 
         UserEntity user = this.authenticationService.getUserFromJwt();
@@ -32,6 +34,12 @@ public class TweetService {
         );
     }
 
+    @Transactional
+    public void deleteTweet(Long id){
+        this.tweetRepository.deleteById(id);
+    }
+
+    @Transactional
     public void reply(TweetDto tweetDto) {
         UserEntity user = this.authenticationService.getUserFromJwt();
         TweetEntity tweet = this.tweetRepository.findById(tweetDto.getTweetId()).orElseThrow();
