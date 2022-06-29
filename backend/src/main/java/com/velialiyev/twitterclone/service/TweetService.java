@@ -43,6 +43,10 @@ public class TweetService {
     public void reply(TweetDto tweetDto) {
         UserEntity user = this.authenticationService.getUserFromJwt();
         TweetEntity tweet = this.tweetRepository.findById(tweetDto.getTweetId()).orElseThrow();
+
+        tweet.setReplyCounter(tweet.getReplyCounter() + 1);
+        this.tweetRepository.save(tweet);
+
         this.replyRepository.save(
                 ReplyEntity.builder()
                         .tweet(tweet)
@@ -54,5 +58,14 @@ public class TweetService {
                         .build()
         );
 
+    }
+
+    @Transactional
+    public void deleteReply(Long id){
+        ReplyEntity reply = this.replyRepository.findById(id).orElseThrow();
+        TweetEntity tweet = this.tweetRepository.findById(reply.getTweet().getId()).orElseThrow();
+        tweet.setReplyCounter(tweet.getReplyCounter() - 1);
+        this.tweetRepository.save(tweet);
+        this.replyRepository.deleteById(id);
     }
 }

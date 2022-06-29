@@ -31,4 +31,10 @@ public class TweetController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/reply/{id}")
+    private ResponseEntity<HttpStatus> deleteReply(@PathVariable(name = "id") Long id){
+        this.tweetService.deleteReply(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
