@@ -13,11 +13,5 @@ import javax.persistence.ManyToOne;
 @Getter
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
-public class ReplyEntity extends BaseTweetEntity {
-
-    @ManyToOne
-    @JoinColumn(name = "tweet_id", referencedColumnName = "id")
-    private TweetEntity tweet;
-
+public class ReplyEntity extends BaseRetweetReplyEntity {
 }
