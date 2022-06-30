@@ -1,55 +1,117 @@
 package com.velialiyev.twitterclone.service;
 
+import com.velialiyev.twitterclone.dto.LikeDto;
 import com.velialiyev.twitterclone.dto.TweetDto;
+import com.velialiyev.twitterclone.entity.LikeEntity;
 import com.velialiyev.twitterclone.entity.TweetEntity;
 import com.velialiyev.twitterclone.entity.TweetType;
 import com.velialiyev.twitterclone.entity.UserEntity;
+import com.velialiyev.twitterclone.repository.LikeRepository;
 import com.velialiyev.twitterclone.repository.TweetRepository;
-import com.velialiyev.twitterclone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class TweetService {
 
-    private final AuthenticationService authenticationService;
-    private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
     private final TweetRepository tweetRepository;
+    private final AuthenticationService authenticationService;
 
-    public void createTweet(TweetDto tweetDto) {
-        TweetEntity tweet = null;
-        TweetType type;
-        String email = this.authenticationService.getUserFromJwt().getEmail();
-        UserEntity currentUser = userRepository.findByEmail(email).orElseThrow();
+    @Transactional
+    public void tweet(TweetDto tweetDto) {
+        UserEntity user = this.authenticationService.getUserFromJwt();
+        TweetType type = TweetType.valueOf(tweetDto.getType());
+
         if(tweetDto.getTweetId() != null){
-            tweet = tweetRepository.findById(tweetDto.getTweetId()).orElseThrow();
-        }
-        switch (tweetDto.getType()){
-            case "TWEET":
-                type = TweetType.TWEET;
-                break;
-            case "REPLY":
-                type = TweetType.REPLY;
-                break;
-            case "RETWEET":
-                type = TweetType.RETWEET;
-                break;
-            default:
-                type = null;
+            TweetEntity tweet = tweetRepository.findById(tweetDto.getTweetId()).orElseThrow();
+
+            if(type == TweetType.REPLY){
+                tweet.setReplyCounter(tweet.getReplyCounter() + 1);
+                this.createTweet(user, tweetDto.getText(), tweet, type);
+            }
+            else if(type == TweetType.RETWEET){
+
+                Optional<TweetEntity> retweet = this.tweetRepository.findByUserAndTweetAndType(user, tweet, type);
+                if(retweet.isPresent()){
+                    tweet.setRetweetCounter(tweet.getRetweetCounter() - 1);
+                    this.deleteTweet(retweet.get().getId());
+                }
+                else{
+                    tweet.setRetweetCounter(tweet.getRetweetCounter() + 1);
+                    this.createTweet(user, null, tweet, type);
+                }
+
+            }
+            else if(type == TweetType.QUOTE){
+                tweet.setRetweetCounter(tweet.getRetweetCounter() + 1);
+                this.createTweet(user, tweetDto.getText(), tweet, type);
+            }
+            this.tweetRepository.save(tweet);
         }
 
-        tweetRepository.save(TweetEntity.builder()
-                        .user(currentUser)
-                        .text(tweetDto.getText())
-                        .tweet(tweet)
-                        .type(type)
-                        .likeCounter(0)
+        else{
+            this.createTweet(user, tweetDto.getText(), null, type);
+        }
+
+    }
+
+    private void createTweet(UserEntity user, String text, TweetEntity tweet, TweetType type){
+        this.tweetRepository.save(
+                TweetEntity.builder()
+                        .user(user)
+                        .text(text)
                         .replyCounter(0)
                         .retweetCounter(0)
+                        .likeCounter(0)
+                        .tweet(tweet)
+                        .type(type)
                         .createdDate(Instant.now())
-                .build());
+                        .build()
+        );
+    }
+
+    @Transactional
+    public void deleteTweet(Long id){
+        TweetEntity tweet = this.tweetRepository.findById(id).orElseThrow();
+        if(tweet.getType() != TweetType.TWEET)
+        {
+            TweetEntity parentTweet = this.tweetRepository.findById(tweet.getTweet().getId()).orElseThrow();
+            if(tweet.getType() == TweetType.REPLY){
+                parentTweet.setReplyCounter(parentTweet.getReplyCounter() - 1);
+            }
+            else{
+                parentTweet.setRetweetCounter(parentTweet.getRetweetCounter() - 1);
+            }
+            this.tweetRepository.save(parentTweet);
+        }
+        this.tweetRepository.deleteById(id);
+    }
+
+    public void like(LikeDto likeDto) {
+        UserEntity user = this.authenticationService.getUserFromJwt();
+        TweetEntity tweet = this.tweetRepository.findById(likeDto.getTweetId()).orElseThrow();
+        Optional<LikeEntity> optional = this.likeRepository.findByUserAndTweet(user, tweet);
+
+        if(optional.isPresent()){
+            tweet.setLikeCounter(tweet.getLikeCounter() - 1);
+            this.tweetRepository.save(tweet);
+            this.likeRepository.delete(optional.get());
+        }
+        else{
+            tweet.setLikeCounter(tweet.getLikeCounter() + 1);
+            this.tweetRepository.save(tweet);
+            this.likeRepository.save(
+                    LikeEntity.builder()
+                            .user(user)
+                            .tweet(tweet)
+                            .build()
+            );
+        }
     }
 }
