@@ -37,4 +37,16 @@ public class TweetController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/retweet")
+    private ResponseEntity<HttpStatus> retweet(@RequestBody TweetDto tweetDto){
+        this.tweetService.retweet(tweetDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/retweet/{id}")
+    private ResponseEntity<HttpStatus> deleteRetweet(@PathVariable(name = "id") Long id){
+        this.tweetService.deleteRetweet(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

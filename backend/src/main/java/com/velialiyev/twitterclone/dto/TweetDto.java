@@ -11,5 +11,5 @@ public class TweetDto {
 
     private String text;
     private Long tweetId;
-
+    private String type;
 }
