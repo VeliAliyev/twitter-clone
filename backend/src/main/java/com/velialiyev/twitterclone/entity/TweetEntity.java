@@ -31,7 +31,7 @@ public class TweetEntity {
     @JoinColumn(name = "tweet_id", referencedColumnName = "id")
     private TweetEntity tweet;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "tweet",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<TweetEntity> replies;
 
     private TweetType type;
