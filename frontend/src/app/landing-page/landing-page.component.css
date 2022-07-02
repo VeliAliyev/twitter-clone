@@ -1,0 +1,220 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Work Sans", sans-serif; 
+}
+
+svg{
+    width: 20px;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    /* min-height: 100%; */
+     min-height: 100vh;
+    
+}
+
+.bg-sec{
+    /* min-height: 100%; */
+    min-height: 100vh;
+    flex-basis: 55%;
+    background-image: url(https://abs.twimg.com/sticky/illustrations/lohp_1302x955.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+
+.bg-sec svg{
+    max-width: 380px;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    fill: currentColor;
+}
+
+.sign-up{
+    margin-top: 60px;
+    flex-basis: 45%;
+    padding: 2rem;
+}
+
+.sign-up .twitter-logo-small svg{
+    fill: #1D9BF0;
+    width: 3rem;
+}
+
+.text{
+    margin-top: 3rem;
+}
+
+h1{
+    /* font-size: 4.5vw; */
+    font-size: 4rem;
+    font-weight: 900;
+    display: inline-block;
+}
+
+h3{
+    font-size: 2rem;
+    margin-top: 3rem;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    width: 18rem;
+    margin-top: 2rem   
+}
+
+.btn{
+    font-weight: 500;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border: 1px solid rgb(233, 233, 233);
+    color: gray;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.btn:hover{
+    background-color: rgba(237, 249, 255, 1);
+}
+
+.btn span{
+    margin-left: .5rem;
+}
+
+.a-btn{
+    color: #0F1419;
+}
+
+.sign-up-btn{
+    background-color: #1D9BF0;
+    color: white;
+    transition: background-color 0.15s;
+}
+
+.sign-up-btn:hover{
+    background-color: #1b85cc;
+    
+}
+
+.sign-in-btn{
+    color:#1D9BF0;
+}
+
+.sign-up p{
+    font-size: .6rem;
+}
+
+.sign-up p span{
+    color:  #1D9BF0;
+    cursor: pointer;
+}
+
+.sign-up p span:hover{
+    text-decoration: underline;
+}
+
+.sign-up .or {
+    position: relative;
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.sign-up .or::before,
+.sign-up .or::after{
+    content: "";
+    position: absolute;
+    background-color: rgb(233, 233, 233);
+    width: 45%;
+    height: 0.01rem;
+    top: 50%;
+    left: 22.5%;
+    transform: translate(-50%, -50%);
+}
+.sign-up .or::after{
+    left: 77.5%;
+}
+
+.sign-up h4{
+    font-size: 1rem;
+    margin-top: 6rem;
+}
+
+.sign-in-btn{
+    margin-top: 1rem;
+}
+
+footer{
+    width: 100%;
+    text-align: center;
+    font-size: .85rem;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+footer p span{
+    display: inline-block;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+    margin-bottom: 0.5rem;
+    color: #536471;
+    cursor: pointer;
+}
+
+footer p span:hover{
+    text-decoration: underline;
+}
+
+@media (max-width: 1015px) {
+    .container{
+        flex-direction: column-reverse;
+        
+    }
+
+    .bg-sec{
+        flex-basis: 100%;
+        min-height: 50vh;
+    }
+
+    .bg-sec svg{
+        width: 200px;
+    }
+
+  
+    .sign-up{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        align-self: center;
+        
+    }
+    h1{
+        font-size: 3rem;
+    }
+
+    h3{
+        margin-top: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    .sign-up h4{
+        font-size: 1rem;
+        margin-top: 2rem;
+    }
+}
