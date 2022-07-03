@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-page',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+
+    this.activatedRoute.queryParams.subscribe(params=>{
+      if(params["signedIn"] !== undefined && params["signedIn"] === "true"){
+        this.toastr.success("Sign In Successful");
+      }
+    })
+
   }
 
 }
