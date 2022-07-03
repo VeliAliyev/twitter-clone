@@ -15,6 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class AuthenticationService {
@@ -27,6 +30,9 @@ public class AuthenticationService {
     public void signup(SignUpRequestDto signUpRequestDto){
         userRepository.save(
                 UserEntity.builder()
+                        .firstName(signUpRequestDto.getFirstName())
+                        .lastName(signUpRequestDto.getLastName())
+                        .username(signUpRequestDto.getUsername())
                         .email(signUpRequestDto.getEmail())
                         .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                         .build()
@@ -34,12 +40,12 @@ public class AuthenticationService {
     }
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtService.generateToken(authentication);
         String refreshToken = jwtService.generateRefreshToken().getRefreshToken();
-        String username = loginRequestDto.getEmail();
+        String username = loginRequestDto.getUsername();
 
         return LoginResponseDto.builder()
                 .accessToken(accessToken)
@@ -67,5 +73,9 @@ public class AuthenticationService {
         Jwt principal = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return userRepository.findByEmail(principal.getSubject()).orElseThrow();
+    }
+
+    public List<String> findAllUsernames(){
+        return this.userRepository.findAll().stream().map(user -> user.getUsername()).collect(Collectors.toList());
     }
 }
