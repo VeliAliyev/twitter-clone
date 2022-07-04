@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserEntity userEntity = this.userRepository.findByUsername(username).orElseThrow();
 
         return User.builder()
-                .username(userEntity.getEmail())
+                .username(userEntity.getUsername())
                 .password(userEntity.getPassword())
                 .disabled(false)
                 .accountExpired(false)

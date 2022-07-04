@@ -61,18 +61,18 @@ public class AuthenticationService {
 
     public LoginResponseDto refreshToken(RefreshTokenDto refreshTokenDto){
         this.jwtService.validateRefreshToken(refreshTokenDto.getRefreshToken());
-        String accessToken = this.jwtService.generateTokenWithUsername(refreshTokenDto.getEmail());
+        String accessToken = this.jwtService.generateTokenWithUsername(refreshTokenDto.getUsername());
         return LoginResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshTokenDto.getRefreshToken())
-                .username(refreshTokenDto.getEmail())
+                .username(refreshTokenDto.getUsername())
                 .build();
     }
 
     public UserEntity getUserFromJwt(){
         Jwt principal = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return userRepository.findByEmail(principal.getSubject()).orElseThrow();
+        return userRepository.findByUsername(principal.getSubject()).orElseThrow();
     }
 
     public List<String> findAllUsernames(){
