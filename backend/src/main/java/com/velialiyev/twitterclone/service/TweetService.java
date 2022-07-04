@@ -2,6 +2,7 @@ package com.velialiyev.twitterclone.service;
 
 import com.velialiyev.twitterclone.dto.LikeDto;
 import com.velialiyev.twitterclone.dto.TweetDto;
+import com.velialiyev.twitterclone.dto.TweetResponseDto;
 import com.velialiyev.twitterclone.entity.LikeEntity;
 import com.velialiyev.twitterclone.entity.TweetEntity;
 import com.velialiyev.twitterclone.entity.TweetType;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -113,5 +116,24 @@ public class TweetService {
                             .build()
             );
         }
+    }
+
+    public List<TweetResponseDto> getAllTweets(TweetType type) {
+        List<TweetEntity> tweets = this.tweetRepository.findAllByType(type).orElseThrow();
+        return tweets.stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
+    private TweetResponseDto mapToDto(TweetEntity entity){
+        UserEntity user = this.authenticationService.getUserFromJwt();
+        return TweetResponseDto.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .username(user.getUsername())
+                .duration(null)
+                .tweetText(entity.getText())
+                .replyCounter(entity.getReplyCounter())
+                .retweetCounter(entity.getRetweetCounter())
+                .likeCounter(entity.getLikeCounter())
+                .build();
     }
 }
