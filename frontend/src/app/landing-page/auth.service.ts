@@ -38,4 +38,15 @@ export class AuthService {
     return this.http.get<String[]>("http://localhost:8080/api/auth/usernames");
   }
 
+  getAccessToken(){
+    return this.localStorage.retrieve("accessToken");
+  }
+
+  refreshAccessToken(): Observable<any>{
+    return this.http.post("http://localhost:8080/api/auth/refresh-token", {
+      refreshToken: this.localStorage.retrieve("refreshToken"),
+      username: this.localStorage.retrieve("username")
+    })
+  }
+
 }
