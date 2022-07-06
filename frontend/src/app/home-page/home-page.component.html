@@ -86,17 +86,11 @@
                 <div class="tweet-content">{{tweet.tweetText}}</div>
                 <div class="tweet-icons">
                     <div class="tweet-icon-container">
-                        <img src="assets/svg/comments.svg" class="tweet-icon">
+                        <img src="assets/svg/comments.svg" class="tweet-icon" (click)="reply()">
                         {{tweet.replyCounter}}
                     </div>
-                    <div class="tweet-icon-container">
-                        <img src="assets/svg/retweet.svg" class="tweet-icon">
-                        {{tweet.retweetCounter}}
-                    </div>
-                    <div class="tweet-icon-container">
-                        <img src="assets/svg/like.svg" class="tweet-icon">
-                        {{tweet.likeCounter}}
-                    </div>
+                    <app-retweet [tweet]="tweet"></app-retweet>
+                    <app-like [tweet]="tweet"></app-like>
                     <div>
                         <img src="assets/svg/share.svg" class="tweet-icon">
                     </div>
