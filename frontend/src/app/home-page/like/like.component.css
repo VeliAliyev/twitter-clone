@@ -1,0 +1,20 @@
+.tweet-icon-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tweet-icon{
+    width: 20px;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.tweet-icon:hover{
+    background-color: rgba(0, 0, 0, 0.09);
+    cursor: pointer;
+}
+
+.like{
+    color: rgb(249, 24, 128);
+}
