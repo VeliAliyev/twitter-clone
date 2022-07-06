@@ -126,6 +126,7 @@ public class TweetService {
     private TweetResponseDto mapToDto(TweetEntity entity){
         UserEntity user = this.authenticationService.getUserFromJwt();
         return TweetResponseDto.builder()
+                .id(entity.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .username(user.getUsername())
@@ -135,5 +136,15 @@ public class TweetService {
                 .retweetCounter(entity.getRetweetCounter())
                 .likeCounter(entity.getLikeCounter())
                 .build();
+    }
+
+    public TweetResponseDto getTweet(Long id) {
+        return this.mapToDto(this.tweetRepository.findById(id).orElseThrow());
+    }
+
+    public Boolean getLike(LikeDto likeDto) {
+        UserEntity user = this.authenticationService.getUserFromJwt();
+        TweetEntity tweet = this.tweetRepository.findById(likeDto.getTweetId()).orElseThrow();
+        return this.likeRepository.findByUserAndTweet(user, tweet).isPresent();
     }
 }
