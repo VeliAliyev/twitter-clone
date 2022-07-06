@@ -14,6 +14,9 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { TokenInterceptor } from './token-interceptor';
+import { LikeComponent } from './home-page/like/like.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RetweetComponent } from './home-page/retweet/retweet.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,9 @@ import { TokenInterceptor } from './token-interceptor';
     LandingPageComponent,
     SignInComponent,
     SignUpComponent,
-    HomePageComponent
+    HomePageComponent,
+    LikeComponent,
+    RetweetComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +38,7 @@ import { TokenInterceptor } from './token-interceptor';
     NgxWebstorageModule.forRoot(),
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    FontAwesomeModule,
   ],
   providers: [
     {
