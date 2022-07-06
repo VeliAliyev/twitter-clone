@@ -1,4 +1,5 @@
 export interface TweetResponsePayload{
+    id: number,
     firstName: string,
     lastName: string,
     username: string,
