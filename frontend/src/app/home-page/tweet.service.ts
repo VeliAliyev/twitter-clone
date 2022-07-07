@@ -19,6 +19,10 @@ export class TweetService {
     return this.http.get<any[]>("http://localhost:8080/tweet/tweets");
   }
 
+  getAll(): Observable<any[]>{
+    return this.http.get<any[]>("http://localhost:8080/tweet/all");
+  }
+
   getTweet(tweetId: number): Observable<TweetResponsePayload>{
     return this.http.get<TweetResponsePayload>("http://localhost:8080/tweet/" + tweetId);
   }
@@ -30,5 +34,7 @@ export class TweetService {
   isLiked(tweetId: number):Observable<boolean>{
     return this.http.post<boolean>("http://localhost:8080/tweet/isLiked", {tweetId: tweetId});
   }
+
+  
 
 }
