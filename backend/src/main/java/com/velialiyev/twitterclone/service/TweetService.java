@@ -42,7 +42,7 @@ public class TweetService {
 
                 Optional<TweetEntity> retweet = this.tweetRepository.findByUserAndTweetAndType(user, tweet, type);
                 if(retweet.isPresent()){
-                    tweet.setRetweetCounter(tweet.getRetweetCounter() - 1);
+                    //tweet.setRetweetCounter(tweet.getRetweetCounter() - 1);
                     this.deleteTweet(retweet.get().getId());
                 }
                 else{
@@ -120,31 +120,58 @@ public class TweetService {
 
     public List<TweetResponseDto> getAllTweets(TweetType type) {
         List<TweetEntity> tweets = this.tweetRepository.findAllByType(type).orElseThrow();
-        return tweets.stream().map(this::mapToDto).collect(Collectors.toList());
+        return tweets.stream().map(this::mapTweetToDto).collect(Collectors.toList());
     }
 
-    private TweetResponseDto mapToDto(TweetEntity entity){
-        UserEntity user = this.authenticationService.getUserFromJwt();
-        return TweetResponseDto.builder()
-                .id(entity.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .username(user.getUsername())
-                .duration(null)
-                .tweetText(entity.getText())
-                .replyCounter(entity.getReplyCounter())
-                .retweetCounter(entity.getRetweetCounter())
-                .likeCounter(entity.getLikeCounter())
-                .build();
+    private TweetResponseDto mapTweetToDto(TweetEntity entity){
+        UserEntity user;
+        TweetResponseDto tweetResponseDto;
+        String tweetText;
+
+        if(entity.getTweet() != null){
+            user = entity.getTweet().getUser();
+            tweetText = entity.getTweet().getText();
+        }
+        else{
+            user = this.authenticationService.getUserFromJwt();
+            tweetText = entity.getText();
+
+        }
+        System.out.println(user.getUsername());
+        tweetResponseDto = TweetResponseDto.builder()
+            .id(entity.getId())
+            .firstName(user.getFirstName())
+            .lastName(user.getLastName())
+            .username(user.getUsername())
+            .duration(null)
+            .tweetText(tweetText)
+            .replyCounter(entity.getReplyCounter())
+            .retweetCounter(entity.getRetweetCounter())
+            .likeCounter(entity.getLikeCounter())
+            .build();
+
+        if(entity.getType()==TweetType.RETWEET){
+            user = this.authenticationService.getUserFromJwt();
+            tweetResponseDto.setRetweetedBy(user.getFirstName() + " " + user.getLastName());
+        }
+
+        return tweetResponseDto;
     }
+
+
 
     public TweetResponseDto getTweet(Long id) {
-        return this.mapToDto(this.tweetRepository.findById(id).orElseThrow());
+        return this.mapTweetToDto(this.tweetRepository.findById(id).orElseThrow());
     }
 
     public Boolean getLike(LikeDto likeDto) {
         UserEntity user = this.authenticationService.getUserFromJwt();
         TweetEntity tweet = this.tweetRepository.findById(likeDto.getTweetId()).orElseThrow();
         return this.likeRepository.findByUserAndTweet(user, tweet).isPresent();
+    }
+
+    @Transactional
+    public List<TweetResponseDto> getAll() {
+        return this.tweetRepository.findAll().stream().map(this::mapTweetToDto).collect(Collectors.toList());
     }
 }
