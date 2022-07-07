@@ -195,13 +195,24 @@ body{
     align-items: center;
 }
 
-.tweet-icon{
+.retweeted-by-container{
+    display: flex;
+    align-items: center;
+    color: #536471;
+    filter: invert(38%) sepia(30%) saturate(271%) hue-rotate(164deg) brightness(92%) contrast(94%);
+}
+
+.tweet-icon, .retweeted-by{
     width: 20px;
     padding: 10px;
     border-radius: 15px;
 }
 
+
+
 .tweet-icon:hover{
     background-color: rgba(0, 0, 0, 0.09);
     cursor: pointer;
 }
+
+

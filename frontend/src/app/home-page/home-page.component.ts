@@ -45,26 +45,14 @@ export class HomePageComponent implements OnInit {
       }
     })
     this.fetchTweets();
-
-    window.addEventListener('click', function handleClick(event) {
-      if (!(event.target as HTMLInputElement).matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    });
   }
 
   fetchTweets(){
     const self = this;
-    this.tweetService.getAllTweets().subscribe({
+    this.tweetService.getAll().subscribe({
       next(data){
         self.tweets = data;
+        console.log(data);
       }
     })
   }

@@ -72,6 +72,11 @@
                 </div>
             </div>
             <div class="tweet" *ngFor="let tweet of tweets">
+                <div *ngIf="tweet.retweetedBy" class="retweeted-by-container"> 
+                    <img src="assets/svg/retweet.svg" class="retweeted-by">
+                    {{tweet.retweetedBy }}
+                     Retweeted
+                </div>
                 <div class="tweet-header">
                     <img src="assets/images/profile.png" class="profile-img">
                     <div class="tweet-header-text">
