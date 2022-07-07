@@ -8,6 +8,7 @@
     width: 20px;
     padding: 10px;
     border-radius: 15px;
+
 }
 
 .tweet-icon:hover{
@@ -41,4 +42,8 @@
 
   .dropdown-item{
     margin: 12px;
+  }
+
+  .dropdown-item:hover{
+    cursor: pointer;
   }
