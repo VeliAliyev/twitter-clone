@@ -51,6 +51,12 @@ public class TweetController {
         return ResponseEntity.ok(tweets);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<TweetResponseDto>> getAll(){
+        List<TweetResponseDto> tweets = this.tweetService.getAll();
+        return ResponseEntity.ok(tweets);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<TweetResponseDto> getTweet(@PathVariable(name = "id") Long id){
