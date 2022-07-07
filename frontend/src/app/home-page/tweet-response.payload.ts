@@ -7,5 +7,6 @@ export interface TweetResponsePayload{
     tweetText: string,
     replyCounter: number,
     retweetCounter: number,
-    likeCounter: number
+    likeCounter: number,
+    retweetedBy?: string,
 }
