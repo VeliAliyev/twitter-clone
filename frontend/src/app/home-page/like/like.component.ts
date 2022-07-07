@@ -27,11 +27,14 @@ export class LikeComponent implements OnInit {
     tweetText: "",
     replyCounter: 0,
     retweetCounter: 0,
-    likeCounter: 0
+    likeCounter: 0,
+  
     }
    }
 
   ngOnInit(): void { 
+    const self = this;
+    this.tweetService.isLiked(this.tweet.id).subscribe(isLiked=>self.isLiked.next(isLiked));
   }
 
 
