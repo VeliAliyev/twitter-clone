@@ -1,1 +1,101 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    font-family: Roboto;
+}
+
+html, body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.main{
+    flex-basis: 70%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-container{
+    
+    width: 600px;
+    height: 100%;
+}
+
+.sidebar{
+    flex-basis: 30%;
+    display: flex;
+    justify-content: flex-end;
+    
+}
+
+.retweeted-by{
+    padding-top: 12px;
+    display: flex;
+    align-items: center;
+    color: #536471;
+    filter: invert(38%) sepia(30%) saturate(271%) hue-rotate(164deg) brightness(92%) contrast(94%);
+}
+
+.tweet-header{
+    display: flex;
+    padding: 10px;
+    align-items: center;
+}
+
+.profile-img{
+    margin-top: 5px;
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+}
+
+.tweet-header__author{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.tweet-content{
+    padding: 30px 10px;
+}
+
+.tweet-footer__icon, .retweeted-by img{
+    width: 20px;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.tweet-footer__icon:hover{
+    background-color: rgba(0, 0, 0, 0.09);
+    cursor: pointer;
+}
+
+.tweet-form__text-area, .reply-form__text-area{
+    margin: 10px;
+    resize: none;
+    width: 500px;
+    height: 80px;
+    border: none;
+    font-size: 25px;
+}
+
+.reply-form__text-area{
+    width: 450px;
+}
+
+.tweet-form__footer-button, .reply-form__button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #1D9BF0;
+    width: 75px;
+    height: 45px;
+    border-radius: 30px;
+    border: none;
+}
+
+.tweet-form__footer-button:hover, .reply-form__button{
+    cursor: pointer;
+}
