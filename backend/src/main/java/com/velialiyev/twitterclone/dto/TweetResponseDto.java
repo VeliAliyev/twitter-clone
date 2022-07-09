@@ -1,5 +1,6 @@
 package com.velialiyev.twitterclone.dto;
 
+import com.velialiyev.twitterclone.entity.UserEntity;
 import lombok.*;
 
 @Getter
@@ -17,6 +18,6 @@ public class TweetResponseDto {
     private Integer replyCounter;
     private Integer retweetCounter;
     private Integer likeCounter;
-    private String retweetedBy;
+    private UserDto retweetedBy;
 
 }
