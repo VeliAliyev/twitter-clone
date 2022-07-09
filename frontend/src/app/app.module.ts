@@ -17,6 +17,8 @@ import { TokenInterceptor } from './token-interceptor';
 import { LikeComponent } from './home-page/like/like.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RetweetComponent } from './home-page/retweet/retweet.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { TweetPageComponent } from './tweet-page/tweet-page.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { RetweetComponent } from './home-page/retweet/retweet.component';
     SignUpComponent,
     HomePageComponent,
     LikeComponent,
-    RetweetComponent
+    RetweetComponent,
+    NavbarComponent,
+    TweetPageComponent
   ],
   imports: [
     CommonModule,
