@@ -1,0 +1,49 @@
+body{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* Tweet */
+.tweet-counters{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.tweet-counters div{
+    padding: 12px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    
+    width: 100%;
+}
+
+.tweet-counters span{
+    font-weight: 700;
+}
+
+.tweet-footer__icons{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+/* Reply Form */
+
+.reply-form{
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
+
+.reply-form div{
+    display: flex;
+    align-items: center;
+}
+
+.reply, .reply-form, .tweet{
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+}

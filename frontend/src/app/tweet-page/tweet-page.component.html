@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+    <title>Twitter Clone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <header class="sidebar">
+        <app-navbar></app-navbar>
+    </header>
+
+    <main class="main">
+        <div class="main-container">
+            <!-- Tweet -->
+            <div class="tweet">
+                
+                <div *ngIf="tweet.retweetedBy" class="retweeted-by">
+                    <img src="assets/svg/retweet.svg">
+                    <div>{{tweet.retweetedBy.firstName + " " + tweet.retweetedBy.lastName}} Retweeted</div>
+                </div>
+                
+                <div class="tweet-header">
+                    <img src="assets/images/profile.png" alt="" class="profile-img">
+                    <div class="tweet-header__author">
+                        <div>{{tweet.firstName + " " + tweet.lastName}}</div>
+                        <div>@{{tweet.username}}</div>
+                    </div>
+                </div>
+                
+                <div class="tweet-content">
+                    {{tweet.tweetText}}
+                </div>
+
+                <div class="tweet-counters">
+                    <div> <span>{{tweet.retweetCounter}}</span>   Retweets</div>
+                    <div> <span>{{tweet.likeCounter}}</span>   Likes</div>
+                </div>
+                    
+                <div class="tweet-footer">
+                    <div class="tweet-footer__icons">
+                        <img src="assets/svg/comments.svg" class="tweet-footer__icon">
+                        <img src="assets/svg/retweet.svg" class="tweet-footer__icon">
+                        <!-- <img src="assets/svg/like.svg" class="tweet-footer__icon"> -->
+                        <app-like [tweet]="tweet"></app-like>
+                    </div>
+                </div>
+            </div>
+            <!--End Of Tweet -->
+
+            <!-- Reply Form -->
+            <div class="reply-form">
+                
+                <div *ngIf="isFocus">Replying to @{{tweet.username}}</div>
+
+                <div>
+                    <form id="newReplyForm" [formGroup]="replyForm" (ngSubmit)="reply()">
+                        <textarea [formControlName]="'text'" id="reply-form-text-area" class="reply-form__text-area" name="reply-form-text-area" rows="2"
+                            cols="50" placeholder="Tweet Your Reply" (click)="focus(true)"></textarea>
+                    </form>
+                    
+                    <input class="reply-form__button" type="submit" form="newReplyForm" value="Reply">
+                </div>
+                
+               
+            </div>
+            <!-- End Of Reply Form -->
+            
+            <!-- Replies -->
+            <div class="replies">
+                <div class="reply" *ngFor="let reply of replies">
+                    <div class="tweet-header">
+                        <img src="assets/images/profile.png" alt="" class="profile-img">
+                        <div class="tweet-header__author">
+                            <div>{{reply.firstName + " " + reply.lastName}}</div>
+                            <div>@{{reply.username}}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tweet-content">
+                        {{reply.tweetText}}
+                    </div>
+    
+                    <div class="tweet-counters">
+                        <div> <span>{{reply.retweetCounter}}</span>   Retweets</div>
+                        <div> <span>{{reply.likeCounter}}</span>   Likes</div>
+                    </div>
+                        
+                    <div class="tweet-footer">
+                        <div class="tweet-footer__icons">
+                            <img src="assets/svg/comments.svg" class="tweet-footer__icon">
+                            <img src="assets/svg/retweet.svg" class="tweet-footer__icon">
+                            <img src="assets/svg/like.svg" class="tweet-footer__icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Of Replies -->
+        </div>
+        <div class="trends"></div>
+    </main>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+<!-- <div class="replies" *ngFor="let tweet of tweets" (click)="goToTweet(tweet.id)">
+    <div *ngIf="tweet.retweetedBy" class="retweeted-by-container"> 
+        <img src="assets/svg/retweet.svg" class="retweeted-by">
+        {{tweet.retweetedBy.firstName + " " + tweet.retweetedBy.lastName}}
+         Retweeted
+    </div>
+    <div class="tweet-header">
+        <img src="assets/images/profile.png" class="profile-img">
+        <div class="tweet-header-text">
+            <div>{{tweet.firstName}} {{tweet.lastName }}</div>
+            <div class="tweet-author-data">
+                <div>@{{tweet.username}}</div>
+                <div>&bull;</div>
+                <div>{{tweet.duration}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-content">{{tweet.tweetText}}</div>
+    <div class="tweet-icons">
+        <div class="tweet-icon-container">
+            <img src="assets/svg/comments.svg" class="tweet-icon" (click)="reply()">
+            {{tweet.replyCounter}}
+        </div>
+        <app-retweet [tweet]="tweet"></app-retweet>
+        <app-like [tweet]="tweet"></app-like>
+        <div>
+            <img src="assets/svg/share.svg" class="tweet-icon">
+        </div>
+    </div>
+</div> -->
