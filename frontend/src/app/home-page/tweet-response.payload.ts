@@ -1,3 +1,5 @@
+import { User } from "../user-model";
+
 export interface TweetResponsePayload{
     id: number,
     firstName: string,
@@ -8,5 +10,5 @@ export interface TweetResponsePayload{
     replyCounter: number,
     retweetCounter: number,
     likeCounter: number,
-    retweetedBy?: string,
+    retweetedBy?: User,
 }
