@@ -8,7 +8,7 @@
     {{tweet.retweetCounter}}
       <div class="dropdown">
         <div class="dropdown-content" id="Mydropdown" [ngClass]="showDropdown.getValue() ?'show': '' ">
-            <div (click)="retweet()"  class="dropdown-item">Retweet</div>
+            <div (click)="retweet(tweet.id)"  class="dropdown-item">Retweet</div>
             <div (click)="quote()"  class="dropdown-item">Quote Tweet</div>
         </div>
       </div>

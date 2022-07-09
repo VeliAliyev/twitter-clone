@@ -15,16 +15,12 @@ export class RetweetComponent implements OnInit {
   @Input() tweet: TweetResponsePayload;
   faRepeat = faRepeat;
   showDropdown: BehaviorSubject<boolean>;
-  payload: TweetRequestPayload;
+  
   constructor(private tweetService:TweetService, private router: Router) {
     
     this.showDropdown = new BehaviorSubject(false); 
     
-    this.payload={
-      text: "",
-      tweetId: 0,
-      type: ""
-    }
+    
 
     this.tweet = {
       id: 0,
@@ -64,11 +60,9 @@ export class RetweetComponent implements OnInit {
     console.log(this.showDropdown.getValue());
   }
 
-  retweet(){
+  retweet(tweetId: number){
     const self = this;
-    this.payload.tweetId = this.tweet.id;
-    this.payload.type = "RETWEET";
-    this.tweetService.tweet(this.payload).subscribe({
+    this.tweetService.retweet(tweetId).subscribe({
       next(response){console.log(response)},
       complete(){
         self.router.navigateByUrl("home");
