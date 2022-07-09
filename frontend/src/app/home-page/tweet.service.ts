@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { RetweetResponsePayload } from './retweet/retweet-response.payload';
 import { TweetRequestPayload } from './tweet-request.payload';
 import { TweetResponsePayload } from './tweet-response.payload';
 
@@ -15,8 +16,24 @@ export class TweetService {
     return this.http.post("http://localhost:8080/tweet/post", payload);
   }
 
-  getAllTweets(): Observable<any[]>{
-    return this.http.get<any[]>("http://localhost:8080/tweet/tweets");
+  retweet(tweetId: number){
+    return this.http.post("http://localhost:8080/tweet/retweet", {tweetId: tweetId});
+  }
+
+  // getRetweets(): Observable<Array<RetweetResponsePayload>>{
+  //   return this.http.get<Array<RetweetResponsePayload>>("http://localhost:8080/tweet/retweets");
+  // }
+
+  // getRetweetsForTweet(tweetId: number): Observable<Array<RetweetResponsePayload>>{
+  //   return this.http.get<Array<RetweetResponsePayload>>("http://localhost:8080/tweet/retweets-for-tweet/" + tweetId);
+  // }
+
+  // getTweets(): Observable<Array<TweetResponsePayload>>{
+  //   return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/tweets");
+  // }
+
+  getRepliesForTweet(tweetId: number): Observable<Array<TweetResponsePayload>>{
+    return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/replies-for-tweet/" + tweetId);
   }
 
   getAll(): Observable<any[]>{
