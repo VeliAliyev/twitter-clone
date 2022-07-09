@@ -12,92 +12,63 @@
 
 <body>
     <header class="sidebar">
-        <div class="sidebar-container">
-            <div>
-                <img src="assets/svg/twitter.svg" class="logo">
-            </div>
-            <div class="sidebar-item">
-                <img src="assets/svg/home.svg" class="sidebar-item-icon active">
-                <div class="icon-label">Home</div>
-            </div>
-            <div class="sidebar-item">
-                <img src="assets/svg/explore.svg" class="sidebar-item-icon">
-                <div class="icon-label">Explore</div>
-            </div>
-            <div class="sidebar-item">
-                <img src="assets/svg/notifications.svg" class="sidebar-item-icon">
-                <div class="icon-label">Notification</div>
-            </div>
-            <div class="sidebar-item">
-                <img src="assets/svg/messages.svg" class="sidebar-item-icon">
-                <div class="icon-label">Messages</div>
-            </div>
-            <div class="sidebar-item">
-                <img src="assets/svg/profile.svg" class="sidebar-item-icon">
-                <div class="icon-label">Profile</div>
-            </div>
-            <div class="sidebar-item">
-                <img src="assets/svg/more.svg" class="sidebar-item-icon">
-                <div class="icon-label">More</div>
-            </div>
-            <div class="button">Tweet</div>
-        </div>
+        <app-navbar></app-navbar>
     </header>
+
     <main class="main">
-        <div class="tweets">
-            <div class="tweet-form">
-                <div>
-                    <img src="assets/images/profile.png" alt="" class="profile-img">
-                </div>
-                <div class="text-area">
-                    <div class="text">
+        <div class="main-container">
+            <div class="tweet-form__container">
+               
+                <img src="assets/images/profile.png" alt="" class="profile-img">
+                
+                <div class="tweet-form">
+                    <div>
                         <form id="newTweetForm" [formGroup]="newTweetForm" (ngSubmit)="tweet()">
-                            <textarea [formControlName]="'text'" id="tweet-text-area" class="tweet-text-area" name="tweet-text-area" rows="4"
+                            <textarea [formControlName]="'text'" id="text-area" class="tweet-form__text-area" name="text-area" rows="4"
                                 cols="50" placeholder="What's Happenning?"></textarea>
                         </form>
                     </div>
 
-                    <div class="text-area-footer">
-                        <div class="tex-area-footer-icons">
-                            <img src="assets/svg/media.svg" class="footer-icon">
-                            <img src="assets/svg/gif.svg" class="footer-icon">
-                            <img src="assets/svg/poll.svg" class="footer-icon">
-                            <img src="assets/svg/emoji.svg" class="footer-icon">
-                            <img src="assets/svg/schedule.svg" class="footer-icon">
-                            <img src="assets/svg/location.svg" class="footer-icon">
+                    <div class="tweet-form__footer">
+                        <div class="tweet-form__footer-icons">
+                            <img src="assets/svg/media.svg">
+                            <img src="assets/svg/gif.svg">
+                            <img src="assets/svg/poll.svg">
+                            <img src="assets/svg/emoji.svg">
+                            <img src="assets/svg/schedule.svg">
+                            <img src="assets/svg/location.svg">
                         </div>
-                        <input class="text-area-footer-button" type="submit" form="newTweetForm" value="Tweet">
+                        <input class="tweet-form__footer-button" type="submit" form="newTweetForm" value="Tweet">
                     </div>
-
                 </div>
             </div>
-            <div class="tweet" *ngFor="let tweet of tweets">
-                <div *ngIf="tweet.retweetedBy" class="retweeted-by-container"> 
-                    <img src="assets/svg/retweet.svg" class="retweeted-by">
-                    {{tweet.retweetedBy }}
+            <div class="tweet" *ngFor="let tweet of tweets" >
+                <div *ngIf="tweet.retweetedBy" class="retweeted-by"> 
+                    <img src="assets/svg/retweet.svg">
+                    {{tweet.retweetedBy.firstName + " " + tweet.retweetedBy.lastName}}
                      Retweeted
                 </div>
                 <div class="tweet-header">
                     <img src="assets/images/profile.png" class="profile-img">
-                    <div class="tweet-header-text">
+                    <div class="tweet-header__author">
                         <div>{{tweet.firstName}} {{tweet.lastName }}</div>
-                        <div class="tweet-author-data">
+                        <div >
                             <div>@{{tweet.username}}</div>
                             <div>&bull;</div>
                             <div>{{tweet.duration}}</div>
                         </div>
                     </div>
                 </div>
-                <div class="tweet-content">{{tweet.tweetText}}</div>
-                <div class="tweet-icons">
-                    <div class="tweet-icon-container">
-                        <img src="assets/svg/comments.svg" class="tweet-icon" (click)="reply()">
+                <div class="tweet-content" (click)="goToTweet(tweet.id)">{{tweet.tweetText}}</div>
+                <div class="tweet-footer">
+                    <div class="tweet-footer__icons">
+                        <img src="assets/svg/comments.svg" class="tweet-footer__icon" (click)="reply()">
                         {{tweet.replyCounter}}
                     </div>
                     <app-retweet [tweet]="tweet"></app-retweet>
                     <app-like [tweet]="tweet"></app-like>
                     <div>
-                        <img src="assets/svg/share.svg" class="tweet-icon">
+                        <img src="assets/svg/share.svg" class="tweet-footer__icon">
                     </div>
                 </div>
             </div>
