@@ -7,6 +7,6 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LikeDto {
+public class LikeRetweetDto {
     private Long tweetId;
 }
