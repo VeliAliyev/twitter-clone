@@ -1,9 +1,8 @@
 package com.velialiyev.twitterclone.controller;
 
-import com.velialiyev.twitterclone.dto.LikeDto;
+import com.velialiyev.twitterclone.dto.LikeRetweetDto;
 import com.velialiyev.twitterclone.dto.TweetDto;
 import com.velialiyev.twitterclone.dto.TweetResponseDto;
-import com.velialiyev.twitterclone.entity.LikeEntity;
 import com.velialiyev.twitterclone.entity.TweetType;
 import com.velialiyev.twitterclone.service.TweetService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -35,21 +33,27 @@ public class TweetController {
     }
 
     @PostMapping("/like")
-    public ResponseEntity<HttpStatus> like(@RequestBody LikeDto likeDto){
-        this.tweetService.like(likeDto);
+    public ResponseEntity<HttpStatus> like(@RequestBody LikeRetweetDto likeRetweetDto){
+        this.tweetService.like(likeRetweetDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/retweet")
+    public ResponseEntity<HttpStatus> postRetweet(@RequestBody LikeRetweetDto likeRetweetDto){
+        this.tweetService.retweet(likeRetweetDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/isLiked")
-    public ResponseEntity<Boolean> isLiked(@RequestBody LikeDto likeDto){
-         return ResponseEntity.ok(this.tweetService.getLike(likeDto));
+    public ResponseEntity<Boolean> isLiked(@RequestBody LikeRetweetDto likeRetweetDto){
+         return ResponseEntity.ok(this.tweetService.getLike(likeRetweetDto));
     }
 
-    @GetMapping("/tweets")
-    public ResponseEntity<List<TweetResponseDto>> getAllTweets(){
-        List<TweetResponseDto> tweets = this.tweetService.getAllTweets(TweetType.TWEET);
-        return ResponseEntity.ok(tweets);
-    }
+//    @GetMapping("/tweets")
+//    public ResponseEntity<List<TweetResponseDto>> getAllTweets(){
+//        List<TweetResponseDto> tweets = this.tweetService.getAllTweets();
+//        return ResponseEntity.ok(tweets);
+//    }
 
     @GetMapping("/all")
     public ResponseEntity<List<TweetResponseDto>> getAll(){
@@ -57,10 +61,21 @@ public class TweetController {
         return ResponseEntity.ok(tweets);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<TweetResponseDto> getTweet(@PathVariable(name = "id") Long id){
         TweetResponseDto tweet = this.tweetService.getTweet(id);
         return ResponseEntity.ok(tweet);
     }
+
+//    @GetMapping("/replies-for-tweet/{id}")
+//    public ResponseEntity<List<TweetResponseDto>> getRepliesForTweet(@PathVariable(name = "id") Long id){
+//        List<TweetResponseDto> tweets = this.tweetService.getRepliesForTweet(id);
+//        return ResponseEntity.ok(tweets);
+//    }
+//
+//    @GetMapping("/retweet-for-tweet/{id}")
+//    public ResponseEntity<List<TweetResponseDto>> getRetweetsForTweet(@PathVariable(name = "id") Long id){
+//        List<TweetResponseDto> tweets = this.tweetService.getRetweetsForTweet(id);
+//        return ResponseEntity.ok(tweets);
+//    }
 }
