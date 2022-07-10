@@ -23,9 +23,10 @@ body{
     font-weight: 700;
 }
 
-.tweet-footer__icons{
+.tweet-page-footer__icons{
     display: flex;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
 }
 
