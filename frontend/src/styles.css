@@ -99,3 +99,20 @@ html, body{
 .tweet-form__footer-button:hover, .reply-form__button{
     cursor: pointer;
 }
+
+.tweet-icon-container, .tweet-footer__icons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tweet-icon, .tweet-footer__icon{
+    width: 20px;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.tweet-icon:hover, .tweet-footer__icon:hover{
+    background-color: rgba(0, 0, 0, 0.09);
+    cursor: pointer;
+}
