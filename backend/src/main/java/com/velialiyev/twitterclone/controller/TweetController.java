@@ -67,11 +67,11 @@ public class TweetController {
         return ResponseEntity.ok(tweet);
     }
 
-//    @GetMapping("/replies-for-tweet/{id}")
-//    public ResponseEntity<List<TweetResponseDto>> getRepliesForTweet(@PathVariable(name = "id") Long id){
-//        List<TweetResponseDto> tweets = this.tweetService.getRepliesForTweet(id);
-//        return ResponseEntity.ok(tweets);
-//    }
+    @GetMapping("/replies-for-tweet/{id}")
+    public ResponseEntity<List<TweetResponseDto>> getRepliesForTweet(@PathVariable(name = "id") Long id){
+        List<TweetResponseDto> tweets = this.tweetService.getRepliesForTweet(id);
+        return ResponseEntity.ok(tweets);
+    }
 //
 //    @GetMapping("/retweet-for-tweet/{id}")
 //    public ResponseEntity<List<TweetResponseDto>> getRetweetsForTweet(@PathVariable(name = "id") Long id){
