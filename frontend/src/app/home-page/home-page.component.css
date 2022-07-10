@@ -73,9 +73,5 @@ body{
     justify-content: space-around;
 }
 
-.tweet-footer__icons{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+
 
