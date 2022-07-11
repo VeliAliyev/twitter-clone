@@ -19,39 +19,14 @@
         <div class="main-container">
             <!-- Tweet -->
             <div class="tweet">
-                
-                <div *ngIf="tweet.retweetedBy" class="retweeted-by">
-                    <img src="assets/svg/retweet.svg">
-                    <div>{{tweet.retweetedBy.firstName + " " + tweet.retweetedBy.lastName}} Retweeted</div>
-                </div>
-                
-                <div class="tweet-header">
-                    <img src="assets/images/profile.png" alt="" class="profile-img">
-                    <div class="tweet-header__author">
-                        <div>{{tweet.firstName + " " + tweet.lastName}}</div>
-                        <div>@{{tweet.username}}</div>
-                    </div>
-                </div>
-                
-                <div class="tweet-content">
-                    {{tweet.tweetText}}
-                </div>
-
+                <app-tweet [tweet]="tweet"></app-tweet>
                 <div class="tweet-counters">
                     <div> <span>{{tweet.retweetCounter}}</span>   Retweets</div>
                     <div> <span>{{tweet.likeCounter}}</span>   Likes</div>
                 </div>
-                    
-                <div class="tweet-footer">
-                    <div class="tweet-page-footer__icons">
-                        <img src="assets/svg/comments.svg" class="tweet-footer__icon">
-                        <img src="assets/svg/retweet.svg" class="tweet-footer__icon">
-                        <!-- <img src="assets/svg/like.svg" class="tweet-footer__icon"> -->
-                        <app-like [tweet]="tweet"></app-like>
-                    </div>
-                </div>
             </div>
             <!--End Of Tweet -->
+
 
             <!-- Reply Form -->
             <div class="reply-form">
@@ -64,7 +39,7 @@
                             cols="50" placeholder="Tweet Your Reply" (click)="focus(true)"></textarea>
                     </form>
                     
-                    <input class="reply-form__button" type="submit" form="newReplyForm" value="Reply">
+                    <div class="reply-form__button-container"><input class="reply-form__button" type="submit" form="newReplyForm" value="Reply"></div>
                 </div>
                 
                
