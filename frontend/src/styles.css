@@ -78,10 +78,13 @@ html, body{
     height: 80px;
     border: none;
     font-size: 25px;
+    outline: none;
 }
 
 .reply-form__text-area{
     width: 450px;
+    outline: none;
+    border: none;
 }
 
 .tweet-form__footer-button, .reply-form__button{
@@ -116,3 +119,21 @@ html, body{
     background-color: rgba(0, 0, 0, 0.09);
     cursor: pointer;
 }
+
+
+.tweet-content:hover{
+    cursor: pointer;
+}
+
+.tweet-header__author div{
+    display: flex;
+    padding-right: 5px;
+}
+
+
+.tweet-footer{
+    display: flex;
+    justify-content: space-around;
+}
+
+ 
