@@ -19,6 +19,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RetweetComponent } from './home-page/retweet/retweet.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TweetPageComponent } from './tweet-page/tweet-page.component';
+import { ReplyComponent } from './home-page/reply/reply.component';
+import { TweetComponent } from './tweet/tweet.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { TweetPageComponent } from './tweet-page/tweet-page.component';
     LikeComponent,
     RetweetComponent,
     NavbarComponent,
-    TweetPageComponent
+    TweetPageComponent,
+    ReplyComponent,
+    TweetComponent
   ],
   imports: [
     CommonModule,
