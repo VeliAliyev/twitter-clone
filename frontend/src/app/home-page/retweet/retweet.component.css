@@ -20,7 +20,7 @@
   .show {
     display: flex;
     flex-direction: column;
-    z-index: 11;
+    z-index: 1;
   }
 
   .dropdown-item{
@@ -30,3 +30,53 @@
   .dropdown-item:hover{
     cursor: pointer;
   }
+
+  .overlay {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.3);
+  }
+  
+  .overlay__reply{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 36px;
+    color: black;
+    background-color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    height: 50%;
+    width: 30%;
+    border-radius: 18px;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .retweeted-by{
+    font-size: 16px;
+  }
+  
+  .tweet-header{
+    font-size: 24px;
+  }
+  
+  .reply-form__text-area{
+    width: 95%;
+  }
+  
+  .reply-form__text-area:focus{
+    border: none;
+    outline: none;
+  }
+
+  .tweet-content{
+    cursor: text;
+  }
+  

@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TweetService } from '../tweet.service';
 import { TweetRequestPayload } from '../tweet-request.payload';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-retweet',
   templateUrl: './retweet.component.html',
@@ -15,12 +16,18 @@ export class RetweetComponent implements OnInit {
   @Input() tweet: TweetResponsePayload;
   faRepeat = faRepeat;
   showDropdown: BehaviorSubject<boolean>;
-  
+  overlay:BehaviorSubject<boolean>;
+  quoteForm: FormGroup;
+  quotePayload: TweetRequestPayload;
   constructor(private tweetService:TweetService, private router: Router) {
     
     this.showDropdown = new BehaviorSubject(false); 
     
+    this.overlay=new BehaviorSubject(false);
     
+    this.quoteForm = new FormGroup({
+      text: new FormControl("")
+    })
 
     this.tweet = {
       id: 0,
@@ -33,6 +40,12 @@ export class RetweetComponent implements OnInit {
       retweetCounter: 0,
       likeCounter: 0,
       }
+
+     this.quotePayload = {
+      text: "",
+      tweetId: 0,
+      type: ""
+     }
    }
 
   ngOnInit(): void {
@@ -72,6 +85,26 @@ export class RetweetComponent implements OnInit {
   }
 
   quote(){
-    console.log("Quote");
+    const self = this;
+    this.quotePayload.text = this.quoteForm.get("text")?.value;
+    this.quotePayload.tweetId = this.tweet.id;
+    this.quotePayload.type = "QUOTE";
+    this.tweetService.quote(this.quotePayload).subscribe({
+      next(response){console.log(response)},
+      complete(){
+        self.router.navigateByUrl("home");
+      },
+      error(error){console.log(error)}
+    });
+  }
+
+  hideOverlay(event:Event){
+    if((event.target as HTMLElement).classList.contains("overlay"))
+      this.overlay.next(false);
+  
+  }
+
+  showOverlay(){
+    this.overlay.next(true);
   }
 }
