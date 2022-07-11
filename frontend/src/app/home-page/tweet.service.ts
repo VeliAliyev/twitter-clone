@@ -9,6 +9,8 @@ import { TweetResponsePayload } from './tweet-response.payload';
   providedIn: 'root'
 })
 export class TweetService {
+  
+  
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +20,10 @@ export class TweetService {
 
   retweet(tweetId: number){
     return this.http.post("http://localhost:8080/tweet/retweet", {tweetId: tweetId});
+  }
+
+  quote(quotePayload: TweetRequestPayload) {
+    return this.http.post("http://localhost:8080/tweet/post", quotePayload);
   }
 
   // getRetweets(): Observable<Array<RetweetResponsePayload>>{
