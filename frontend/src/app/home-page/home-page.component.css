@@ -46,32 +46,8 @@ body{
     cursor: pointer;
 }
 
-
-
-
-
-
-/* Tweets */
 .tweet{
     border-top: 1px solid lightgray;
     border-left: 1px solid lightgray;
     border-right: 1px solid lightgray;
 }
-
-.tweet-content:hover{
-    cursor: pointer;
-}
-
-.tweet-header__author div{
-    display: flex;
-    padding-right: 5px;
-}
-
-
-.tweet-footer{
-    display: flex;
-    justify-content: space-around;
-}
-
-
-

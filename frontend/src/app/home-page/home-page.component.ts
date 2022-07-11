@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
 import { RetweetResponsePayload } from './retweet/retweet-response.payload';
 import { TweetRequestPayload } from './tweet-request.payload';
 import { TweetResponsePayload } from './tweet-response.payload';
@@ -17,9 +18,8 @@ export class HomePageComponent implements OnInit {
   newTweetForm: FormGroup;
   tweetRequestPayload: TweetRequestPayload;
   tweets: Array<TweetResponsePayload>;
-  
+
   constructor(private activatedRoute: ActivatedRoute, private toastr: ToastrService, private tweetService: TweetService, private router: Router) { 
-    
     this.navigationSubscription = this.router.events.subscribe((event: any)=>{
       if(event instanceof NavigationEnd){
         this.fetchTweets();
@@ -87,7 +87,5 @@ export class HomePageComponent implements OnInit {
    
   }
 
-  goToTweet(tweetId: number){
-    this.router.navigateByUrl("/tweet/" + tweetId);
-  }
+  
 }
