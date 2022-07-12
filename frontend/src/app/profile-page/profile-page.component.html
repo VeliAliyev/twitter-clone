@@ -1,0 +1,41 @@
+<body>
+    <header class="sidebar">
+        <app-navbar></app-navbar>
+    </header>
+    
+    <main class="main">  
+          <div class="main-container">
+              <div class="tweets-counter-container">Veli <span class="tweets-counter">154 Tweets</span></div>
+              <div>
+                <div class="header-photo">
+                    <img src="assets/images/header.jpg" alt="">
+                </div>
+                <div class="profile-section">
+                    <div class="profile-img-container">
+                        <img src="assets/images/profile.png" class="profile-img" alt="">
+                        <div>Edit Profile</div>
+                    </div>
+                    <div style="padding-left:12px;">
+                        <div class="user-first-name">Veli</div>
+                        <div class="username">@veli_aliyev</div>
+                    </div>
+                    <div></div>
+                    <div></div>
+                    
+                </div>
+              </div>
+              <div class="navbar">
+                <div class="navbar-item" (click)="fetchTweets()" [routerLink]="'/profile/tweets'" [ngClass]="{'active': url === '/profile/tweets'}">Tweets</div>
+                <div class="navbar-item" (click)="fetchRetweets()"  [routerLink]="'/profile/retweets'" [ngClass]="{'active': url === '/profile/retweets'}">Retweets & Quotes</div>
+                <div class="navbar-item" [routerLink]="'/profile/replies'" [ngClass]="{'active': url === '/profile/replies'}">Replies</div>
+                <div class="navbar-item" [routerLink]="'/profile/likes'"  [ngClass]="{'active': url === '/profile/likes'}">Likes</div>
+              </div>
+              <div>
+                <div *ngFor="let tweet of tweets" class="tweets">
+                    <app-tweet [tweet]="tweet"></app-tweet>
+                </div>
+              </div>
+        </div>
+        <div class="trends"></div>
+    </main>
+</body>
