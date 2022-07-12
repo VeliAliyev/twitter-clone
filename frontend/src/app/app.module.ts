@@ -21,6 +21,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TweetPageComponent } from './tweet-page/tweet-page.component';
 import { ReplyComponent } from './home-page/reply/reply.component';
 import { TweetComponent } from './tweet/tweet.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TweetComponent } from './tweet/tweet.component';
     NavbarComponent,
     TweetPageComponent,
     ReplyComponent,
-    TweetComponent
+    TweetComponent,
+    ProfilePageComponent
   ],
   imports: [
     CommonModule,
