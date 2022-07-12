@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'ngx-webstorage';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { SignInRequestPayload } from './sign-in/sign-in-request.payload';
 import { SignInResponsePayload } from './sign-in/sign-in-response.payload';
 import { SignUpPayload } from './sign-up/sign-up.payload';
@@ -11,7 +11,7 @@ import { SignUpPayload } from './sign-up/sign-up.payload';
 })
 export class AuthService {
 
- 
+
 
   constructor(private http: HttpClient, private localStorage: LocalStorageService) {
    
@@ -28,6 +28,7 @@ export class AuthService {
         self.localStorage.store("accessToken", response.accessToken);
         self.localStorage.store("refreshToken", response.refreshToken);
         self.localStorage.store("username", response.username);
+       
         return response;
       })
     )
@@ -49,4 +50,7 @@ export class AuthService {
     })
   }
 
+  getUsername(){
+    return this.localStorage.retrieve("username");
+  }
 }
