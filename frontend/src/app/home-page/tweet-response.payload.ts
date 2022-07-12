@@ -11,4 +11,5 @@ export interface TweetResponsePayload{
     retweetCounter: number,
     likeCounter: number,
     retweetedBy?: User,
+    quote?: TweetResponsePayload
 }

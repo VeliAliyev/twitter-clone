@@ -35,6 +35,7 @@ html, body{
     align-items: center;
     color: #536471;
     filter: invert(38%) sepia(30%) saturate(271%) hue-rotate(164deg) brightness(92%) contrast(94%);
+
 }
 
 .tweet-header{
