@@ -19,5 +19,6 @@ public class TweetResponseDto {
     private Integer retweetCounter;
     private Integer likeCounter;
     private UserDto retweetedBy;
+    private TweetResponseDto quote;
 
 }
