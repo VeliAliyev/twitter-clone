@@ -3,8 +3,8 @@
         <div>
             <img src="assets/svg/twitter.svg" class="logo">
         </div>
-        <div class="sidebar-item">
-            <img src="assets/svg/home.svg" class="sidebar-item-icon active">
+        <div class="sidebar-item active" [ngClass]="{'active': url === '/home'}">
+            <img src="assets/svg/home.svg" class="sidebar-item-icon ">
             <div [routerLink]="'/home'" class="icon-label">Home</div>
         </div>
         <div class="sidebar-item">
@@ -19,7 +19,8 @@
             <img src="assets/svg/messages.svg" class="sidebar-item-icon">
             <div class="icon-label">Messages</div>
         </div>
-        <div class="sidebar-item">
+        <div [routerLink]="'/profile/tweets'" class="sidebar-item" 
+        [ngClass]="{'active': url === '/profile/tweets' || url === '/profile/retweets' || url === '/profile/replies' || url === '/profile/likes'}">
             <img src="assets/svg/profile.svg" class="sidebar-item-icon">
             <div class="icon-label">Profile</div>
         </div>
