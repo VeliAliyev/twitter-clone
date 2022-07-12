@@ -34,9 +34,25 @@ export class TweetService {
   //   return this.http.get<Array<RetweetResponsePayload>>("http://localhost:8080/tweet/retweets-for-tweet/" + tweetId);
   // }
 
-  // getTweets(): Observable<Array<TweetResponsePayload>>{
-  //   return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/tweets");
-  // }
+  getTweets(): Observable<Array<TweetResponsePayload>>{
+     return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/tweets");
+  }
+
+  getTweetsByUsername(username: string){
+    return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/tweets-by-username/" + username);
+  }
+
+  getRetweetsByUsername(username: string){
+    return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/retweets-by-username/" + username);
+  }
+
+  getRepliesByUsername(username: string){
+    return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/replies-by-username/" + username);
+  }
+
+  getLikesByUsername(username: string){
+    return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/liked-by-username/" + username);
+  }
 
   getRepliesForTweet(tweetId: number): Observable<Array<TweetResponsePayload>>{
     return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/replies-for-tweet/" + tweetId);
