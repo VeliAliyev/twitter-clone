@@ -11,7 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface TweetRepository extends JpaRepository<TweetEntity, Long> {
-    Optional<TweetEntity> findByUserAndTweetAndType(UserEntity user, TweetEntity tweet, TweetType type);
+    Optional<List<TweetEntity>> findAllByUserAndType(UserEntity user, TweetType type);
     Optional<List<TweetEntity>> findAllByTweetAndType(TweetEntity tweet, TweetType type);
     Optional<List<TweetEntity>> findAllByType(TweetType type);
+
 }
