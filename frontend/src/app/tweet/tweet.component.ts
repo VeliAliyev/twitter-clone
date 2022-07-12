@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { TweetResponsePayload } from '../home-page/tweet-response.payload';
 
 @Component({
@@ -9,6 +9,10 @@ import { TweetResponsePayload } from '../home-page/tweet-response.payload';
 })
 export class TweetComponent implements OnInit {
   @Input() tweet: TweetResponsePayload;
+  @Input() footer: Boolean = true;
+  @Input() counters: Boolean = false;
+
+ 
   constructor(private router: Router) { 
     this.tweet = {
       id: 0,
@@ -22,10 +26,15 @@ export class TweetComponent implements OnInit {
       likeCounter: 0,
     
       }
+      
+      
   }
 
   ngOnInit(): void {
   }
+
+ 
+
 
   goToTweet(tweetId: number){
     this.router.navigateByUrl("/tweet/" + tweetId);

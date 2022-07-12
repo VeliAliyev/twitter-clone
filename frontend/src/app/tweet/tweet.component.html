@@ -16,7 +16,18 @@
 </div>
 <div class="tweet-content" (click)="goToTweet(tweet.id)">{{tweet.tweetText}}</div>
 
-<div class="tweet-footer">
+<div *ngIf="tweet.quote" class="tweet-quote-container">
+    <div  class="tweet-quote">
+        <app-tweet [footer]="false" [tweet]="tweet.quote"></app-tweet>
+    </div>
+</div>
+
+<div *ngIf="counters" class="tweet-counters">
+    <div> <span>{{tweet.retweetCounter}}</span>   Retweets</div>
+    <div> <span>{{tweet.likeCounter}}</span>   Likes</div>
+</div>
+
+<div *ngIf="footer" class="tweet-footer">
     
     <app-reply [tweet]="tweet"></app-reply>
     <app-retweet [tweet]="tweet"></app-retweet>
