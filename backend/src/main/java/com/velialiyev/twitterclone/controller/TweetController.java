@@ -49,11 +49,30 @@ public class TweetController {
          return ResponseEntity.ok(this.tweetService.getLike(likeRetweetDto));
     }
 
-//    @GetMapping("/tweets")
-//    public ResponseEntity<List<TweetResponseDto>> getAllTweets(){
-//        List<TweetResponseDto> tweets = this.tweetService.getAllTweets();
-//        return ResponseEntity.ok(tweets);
-//    }
+    @GetMapping("/tweets")
+    public ResponseEntity<List<TweetResponseDto>> getAllTweets(){
+        return ResponseEntity.ok( this.tweetService.getAllTweets());
+    }
+
+    @GetMapping("/tweets-by-username/{username}")
+    public ResponseEntity<List<TweetResponseDto>> getTweetsByUsername(@PathVariable(name = "username") String username){
+        return ResponseEntity.ok( this.tweetService.getTweetsByUsername(username));
+    }
+
+    @GetMapping("/retweets-by-username/{username}")
+    public ResponseEntity<List<TweetResponseDto>> getRetweetsByUsername(@PathVariable(name = "username") String username){
+        return ResponseEntity.ok( this.tweetService.getRetweetsByUsername(username));
+    }
+
+    @GetMapping("/replies-by-username/{username}")
+    public ResponseEntity<List<TweetResponseDto>> getRepliesByUsername(@PathVariable(name = "username") String username){
+        return ResponseEntity.ok( this.tweetService.getRepliesByUsername(username));
+    }
+
+    @GetMapping("/liked-by-username/{username}")
+    public ResponseEntity<List<TweetResponseDto>> getLikedByUsername(@PathVariable(name = "username") String username){
+        return ResponseEntity.ok( this.tweetService.getLikedByUsername(username));
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<TweetResponseDto>> getAll(){
