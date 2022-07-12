@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
@@ -27,7 +27,7 @@ export class HomePageComponent implements OnInit {
     })
     
     this.newTweetForm = new FormGroup({
-      text: new FormControl("")
+      text: new FormControl("", Validators.required)
     })
     this.tweets = new Array();
     this.tweetRequestPayload = {
