@@ -8,6 +8,7 @@ import com.velialiyev.twitterclone.entity.*;
 import com.velialiyev.twitterclone.repository.LikeRepository;
 import com.velialiyev.twitterclone.repository.RetweetRepository;
 import com.velialiyev.twitterclone.repository.TweetRepository;
+import com.velialiyev.twitterclone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ public class TweetService {
     private final TweetRepository tweetRepository;
     private final AuthenticationService authenticationService;
     private final RetweetRepository retweetRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void tweet(TweetDto tweetDto) {
@@ -141,23 +143,6 @@ public class TweetService {
         return replies.stream().map(this::mapTweetToDto).collect(Collectors.toList());
     }
 
-    private TweetResponseDto mapTweetToDto(TweetEntity entity){
-
-        UserEntity user = entity.getUser();
-
-        return TweetResponseDto.builder()
-                .id(entity.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .username(user.getUsername())
-                .duration(null)
-                .tweetText(entity.getText())
-                .replyCounter(entity.getReplyCounter())
-                .retweetCounter(entity.getRetweetCounter())
-                .likeCounter(entity.getLikeCounter())
-                .build();
-    }
-
     @Transactional
     public TweetResponseDto getTweet(Long id) {
         return this.mapTweetToDto(this.tweetRepository.findById(id).orElseThrow());
@@ -180,6 +165,60 @@ public class TweetService {
         return tweets;
     }
 
+    @Transactional
+    public List<TweetResponseDto> getTweetsByUsername(String username) {
+        UserEntity user = this.userRepository.findByUsername(username).orElseThrow();
+        return this.tweetRepository.findAllByUserAndType(user, TweetType.TWEET).orElseThrow().stream().map(this::mapTweetToDto).collect(Collectors.toList());
+
+    }
+
+    @Transactional
+    public List<TweetResponseDto> getRetweetsByUsername(String username) {
+        UserEntity user = this.userRepository.findByUsername(username).orElseThrow();
+        List<TweetResponseDto> tweetResponseDtos = this.tweetRepository.findAllByUserAndType(user, TweetType.QUOTE)
+                .orElseThrow().stream().map(this::mapTweetToDto).collect(Collectors.toList());
+        tweetResponseDtos.addAll(this.retweetRepository.findAllByUser(user).orElseThrow().stream().map(this::mapRetweetToDto).collect(Collectors.toList()));
+
+        return tweetResponseDtos;
+
+    }
+
+    @Transactional
+    public List<TweetResponseDto> getRepliesByUsername(String username) {
+        UserEntity user = this.userRepository.findByUsername(username).orElseThrow();
+        return this.tweetRepository.findAllByUserAndType(user, TweetType.REPLY).orElseThrow().stream().map(this::mapTweetToDto).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<TweetResponseDto> getLikedByUsername(String username) {
+        UserEntity user = this.userRepository.findByUsername(username).orElseThrow();
+        List<LikeEntity> likes = this.likeRepository.findAllByUser(user).orElseThrow();
+
+        return likes.stream().map(LikeEntity::getTweet).map(this::mapTweetToDto).collect(Collectors.toList());
+    }
+
+    private TweetResponseDto mapTweetToDto(TweetEntity entity){
+
+        UserEntity user = entity.getUser();
+        TweetResponseDto tweetResponseDto = TweetResponseDto.builder()
+                .id(entity.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .username(user.getUsername())
+                .duration(null)
+                .tweetText(entity.getText())
+                .replyCounter(entity.getReplyCounter())
+                .retweetCounter(entity.getRetweetCounter())
+                .likeCounter(entity.getLikeCounter())
+                .build();
+
+        if(entity.getType() == TweetType.QUOTE && entity.getTweet() != null){
+            tweetResponseDto.setQuote(mapTweetToDto(entity.getTweet()));
+        }
+
+        return tweetResponseDto;
+    }
+
     private TweetResponseDto mapRetweetToDto(RetweetEntity retweetEntity) {
         TweetEntity tweet = retweetEntity.getTweet();
         UserEntity publisher = tweet.getUser();
@@ -190,7 +229,7 @@ public class TweetService {
                 .username(retweetEntity.getUser().getUsername())
                 .build();
 
-        return TweetResponseDto.builder()
+        TweetResponseDto tweetResponseDto = TweetResponseDto.builder()
                 .id(tweet.getId())
                 .firstName(publisher.getFirstName())
                 .lastName(publisher.getLastName())
@@ -202,12 +241,13 @@ public class TweetService {
                 .likeCounter(tweet.getLikeCounter())
                 .retweetedBy(retweeter)
                 .build();
+
+        if(retweetEntity.getTweet().getType() == TweetType.QUOTE){
+            tweetResponseDto.setQuote(mapTweetToDto(retweetEntity.getTweet().getTweet()));
+        }
+
+        return tweetResponseDto;
     }
 
 
-    public List<TweetResponseDto> getRetweetsForTweet(Long id) {
-        TweetEntity tweet = this.tweetRepository.findById(id).orElseThrow();
-        return this.retweetRepository.findAllByTweet(tweet).stream().map(this::mapRetweetToDto).collect(Collectors.toList());
-
-    }
 }
