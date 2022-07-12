@@ -44,11 +44,16 @@ export class TweetPageComponent implements OnInit {
     this.replyForm = new FormGroup({
       text: new FormControl("")
     })
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
     
     this.navigationSubscription = this.router.events.subscribe((event: any)=>{
       if(event instanceof NavigationEnd){
-        this.fetchTweetAndReplies();
+        this.router.navigated = false;
       }
+      
     })
 
   }
