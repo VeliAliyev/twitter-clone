@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { TweetResponsePayload } from '../home-page/tweet-response.payload';
 import { TweetService } from '../home-page/tweet.service';
 import { AuthService } from '../landing-page/auth.service';
@@ -11,15 +13,27 @@ import { AuthService } from '../landing-page/auth.service';
 })
 export class ProfilePageComponent implements OnInit {
 
+  overlay:BehaviorSubject<boolean>;
   url: string;
   tweets: Array<TweetResponsePayload>;
   username: string;
   navigationSubscription;
+  profileForm: FormGroup;
   constructor(private router: Router, private tweetService: TweetService, private authService: AuthService) {
+    
+    this.overlay=new BehaviorSubject(false);
     this.url = this.router.url;
     this.tweets = new Array();
     this.username = this.authService.getUsername();
     
+    this.profileForm = new FormGroup({
+      name: new FormControl(""),
+      bio: new FormControl(""),
+      location: new FormControl(""),
+      website: new FormControl(""),
+      birthDate: new FormControl(""),
+    })
+
     this.navigationSubscription = this.router.events.subscribe((event: any)=>{
       if(event instanceof NavigationEnd){
         if(this.router.url === "/profile/tweets"){
@@ -69,4 +83,17 @@ export class ProfilePageComponent implements OnInit {
     const self = this;
     this.tweetService.getLikesByUsername(this.username).subscribe(response=>self.tweets = response);
   }
+
+  hideOverlay(event:Event){
+    if((event.target as HTMLElement).classList.contains("overlay"))
+      this.overlay.next(false);
+  }
+
+  showOverlay(){
+    this.overlay.next(true);
+  }
+
+  save(){}
+  uploadBanner(){}
+  uploadProfilePicture(){}
 }

@@ -1,4 +1,26 @@
 <body>
+    <div class="overlay" [style.display]="overlay.getValue() ? 'block':'none'" (click)="hideOverlay($event)">
+        <div class="overlay__reply">
+            
+            <img src="assets/images/header.jpg" alt="" class="header-photo hover" style="margin: 12px;" (click)="uploadBanner()">
+            <img src="assets/images/profile.png" alt="" class="profile-img hover" (click)="uploadProfilePicture()">
+            <form id="newProfileForm" [formGroup]="profileForm" class="overlay__form"  (ngSubmit)="save()">
+                <input type="text" [formControlName]="'name'"  placeholder="Name">
+                <textarea [formControlName]="'bio'" id="profile-form-text-area" name="reply-form-text-area" rows="2"
+                    cols="50" placeholder="Bio" ></textarea>
+                <input type="text" [formControlName]="'location'" placeholder="Location">
+                <input type="text" [formControlName]="'website'" placeholder="Website">
+                <input type="date" [formControlName]="'birthDate'" placeholder="Birth Date">
+                
+            </form>
+            
+            <div style="width: 90%; display:flex; justify-content: flex-end; margin-bottom: 12px;">
+                <input class="reply-form__button" type="submit" form="newProfileForm" value="Save">
+            </div>
+        
+        </div>
+    </div>
+
     <header class="sidebar">
         <app-navbar></app-navbar>
     </header>
@@ -13,7 +35,7 @@
                 <div class="profile-section">
                     <div class="profile-img-container">
                         <img src="assets/images/profile.png" class="profile-img" alt="">
-                        <div>Edit Profile</div>
+                        <div (click)="showOverlay()" class="edit-button">Edit Profile</div>
                     </div>
                     <div style="padding-left:12px;">
                         <div class="user-first-name">Veli</div>
