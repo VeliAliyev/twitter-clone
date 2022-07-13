@@ -1,6 +1,9 @@
 package com.velialiyev.twitterclone.dto;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.text.SimpleDateFormat;
 
 @Getter
 @Setter
@@ -8,7 +11,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
+    private MultipartFile profilePicture;
     private String firstName;
     private String lastName;
     private String username;
+    private String bio;
+    private String location;
+    private String personalWebsite;
+    private SimpleDateFormat birthDate;
 }
