@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Getter
@@ -42,4 +43,11 @@ public class UserEntity {
 
     @NotNull
     private String password;
+
+    private String profileBanner;
+    private String profilePicture;
+    private String bio;
+    private String location;
+    private String personalWebsite;
+    private SimpleDateFormat birthDate;
 }
