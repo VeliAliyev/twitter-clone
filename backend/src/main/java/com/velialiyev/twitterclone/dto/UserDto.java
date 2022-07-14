@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
+    private String bannerPicture;
     private MultipartFile profilePicture;
     private String firstName;
     private String lastName;
@@ -18,5 +19,5 @@ public class UserDto {
     private String bio;
     private String location;
     private String personalWebsite;
-    private SimpleDateFormat birthDate;
+    private String birthDate;
 }
