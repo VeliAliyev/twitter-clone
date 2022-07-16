@@ -1,14 +1,11 @@
 package com.velialiyev.twitterclone.service;
 
-import com.velialiyev.twitterclone.dto.LikeRetweetDto;
+import com.velialiyev.twitterclone.dto.LikeRetweetBookmarkDto;
 import com.velialiyev.twitterclone.dto.TweetDto;
 import com.velialiyev.twitterclone.dto.TweetResponseDto;
 import com.velialiyev.twitterclone.dto.UserDto;
 import com.velialiyev.twitterclone.entity.*;
-import com.velialiyev.twitterclone.repository.LikeRepository;
-import com.velialiyev.twitterclone.repository.RetweetRepository;
-import com.velialiyev.twitterclone.repository.TweetRepository;
-import com.velialiyev.twitterclone.repository.UserRepository;
+import com.velialiyev.twitterclone.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +24,7 @@ public class TweetService {
     private final AuthenticationService authenticationService;
     private final RetweetRepository retweetRepository;
     private final UserRepository userRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     @Transactional
     public void tweet(TweetDto tweetDto) {
@@ -87,9 +85,9 @@ public class TweetService {
     }
 
     @Transactional
-    public void like(LikeRetweetDto likeRetweetDto) {
+    public void like(LikeRetweetBookmarkDto likeRetweetBookmarkDto) {
         UserEntity user = this.authenticationService.getUserFromJwt();
-        TweetEntity tweet = this.tweetRepository.findById(likeRetweetDto.getTweetId()).orElseThrow();
+        TweetEntity tweet = this.tweetRepository.findById(likeRetweetBookmarkDto.getTweetId()).orElseThrow();
         Optional<LikeEntity> optional = this.likeRepository.findByUserAndTweet(user, tweet);
 
         if(optional.isPresent()){
@@ -110,9 +108,9 @@ public class TweetService {
     }
 
     @Transactional
-    public void retweet(LikeRetweetDto likeRetweetDto) {
+    public void retweet(LikeRetweetBookmarkDto likeRetweetBookmarkDto) {
         UserEntity user = this.authenticationService.getUserFromJwt();
-        TweetEntity tweet = this.tweetRepository.findById(likeRetweetDto.getTweetId()).orElseThrow();
+        TweetEntity tweet = this.tweetRepository.findById(likeRetweetBookmarkDto.getTweetId()).orElseThrow();
         Optional<RetweetEntity> retweet = this.retweetRepository.findByUserAndTweet(user, tweet);
         if(retweet.isPresent()){
             tweet.setRetweetCounter(tweet.getRetweetCounter() - 1);
@@ -149,9 +147,9 @@ public class TweetService {
     }
 
     @Transactional(readOnly = true)
-    public Boolean getLike(LikeRetweetDto likeRetweetDto) {
+    public Boolean isLiked(LikeRetweetBookmarkDto likeRetweetBookmarkDto) {
         UserEntity user = this.authenticationService.getUserFromJwt();
-        TweetEntity tweet = this.tweetRepository.findById(likeRetweetDto.getTweetId()).orElseThrow();
+        TweetEntity tweet = this.tweetRepository.findById(likeRetweetBookmarkDto.getTweetId()).orElseThrow();
         return this.likeRepository.findByUserAndTweet(user, tweet).isPresent();
     }
 
@@ -249,5 +247,34 @@ public class TweetService {
         return tweetResponseDto;
     }
 
+    @Transactional
+    public void bookmark(LikeRetweetBookmarkDto likeRetweetBookmarkDto) {
+        UserEntity user = this.authenticationService.getUserFromJwt();
+        TweetEntity tweet = this.tweetRepository.findById(likeRetweetBookmarkDto.getTweetId()).orElseThrow();
+        Optional<BookmarkEntity> optional = this.bookmarkRepository.findByUserAndTweet(user, tweet);
 
+        if(optional.isPresent()){
+            this.bookmarkRepository.delete(optional.get());
+        }
+        else{
+            this.bookmarkRepository.save(BookmarkEntity.builder().tweet(tweet).user(user).build());
+        }
+    }
+
+    @Transactional
+    public List<TweetResponseDto> getBookmarksByUsername(String username) {
+        UserEntity user = this.userRepository.findByUsername(username).orElseThrow();
+        return this.bookmarkRepository
+                .findAllByUser(user)
+                .orElseThrow()
+                .stream()
+                .map(BookmarkEntity::getTweet).map(this::mapTweetToDto).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isBookmarked(LikeRetweetBookmarkDto likeRetweetBookmarkDto) {
+        UserEntity user = this.authenticationService.getUserFromJwt();
+        TweetEntity tweet = this.tweetRepository.findById(likeRetweetBookmarkDto.getTweetId()).orElseThrow();
+        return this.bookmarkRepository.findByUserAndTweet(user, tweet).isPresent();
+    }
 }
