@@ -1,9 +1,8 @@
 package com.velialiyev.twitterclone.controller;
 
-import com.velialiyev.twitterclone.dto.LikeRetweetDto;
+import com.velialiyev.twitterclone.dto.LikeRetweetBookmarkDto;
 import com.velialiyev.twitterclone.dto.TweetDto;
 import com.velialiyev.twitterclone.dto.TweetResponseDto;
-import com.velialiyev.twitterclone.entity.TweetType;
 import com.velialiyev.twitterclone.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,20 +32,36 @@ public class TweetController {
     }
 
     @PostMapping("/like")
-    public ResponseEntity<HttpStatus> like(@RequestBody LikeRetweetDto likeRetweetDto){
-        this.tweetService.like(likeRetweetDto);
+    public ResponseEntity<HttpStatus> like(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
+        this.tweetService.like(likeRetweetBookmarkDto);
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/bookmark")
+    public ResponseEntity<HttpStatus> bookmark(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
+        this.tweetService.bookmark(likeRetweetBookmarkDto);
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/bookmarks/{username}")
+    public ResponseEntity<List<TweetResponseDto>> getBookmarks(@PathVariable String username){
+
+        return ResponseEntity.ok(this.tweetService.getBookmarksByUsername(username));
+    }
+
     @PostMapping("/retweet")
-    public ResponseEntity<HttpStatus> postRetweet(@RequestBody LikeRetweetDto likeRetweetDto){
-        this.tweetService.retweet(likeRetweetDto);
+    public ResponseEntity<HttpStatus> postRetweet(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
+        this.tweetService.retweet(likeRetweetBookmarkDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/isLiked")
-    public ResponseEntity<Boolean> isLiked(@RequestBody LikeRetweetDto likeRetweetDto){
-         return ResponseEntity.ok(this.tweetService.getLike(likeRetweetDto));
+    public ResponseEntity<Boolean> isLiked(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
+         return ResponseEntity.ok(this.tweetService.isLiked(likeRetweetBookmarkDto));
+    }
+
+    @PostMapping("/isBookmarked")
+    public ResponseEntity<Boolean> isBookmarked(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
+        return ResponseEntity.ok(this.tweetService.isBookmarked(likeRetweetBookmarkDto));
     }
 
     @GetMapping("/tweets")
@@ -91,10 +106,4 @@ public class TweetController {
         List<TweetResponseDto> tweets = this.tweetService.getRepliesForTweet(id);
         return ResponseEntity.ok(tweets);
     }
-//
-//    @GetMapping("/retweet-for-tweet/{id}")
-//    public ResponseEntity<List<TweetResponseDto>> getRetweetsForTweet(@PathVariable(name = "id") Long id){
-//        List<TweetResponseDto> tweets = this.tweetService.getRetweetsForTweet(id);
-//        return ResponseEntity.ok(tweets);
-//    }
 }
