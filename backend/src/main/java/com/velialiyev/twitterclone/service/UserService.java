@@ -2,11 +2,14 @@ package com.velialiyev.twitterclone.service;
 
 import com.velialiyev.twitterclone.dto.UserDto;
 import com.velialiyev.twitterclone.entity.UserEntity;
+import com.velialiyev.twitterclone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -19,42 +22,87 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final AuthenticationService authenticationService;
 
-    public void saveImage(MultipartFile picture) {
-        UserEntity user = this.authenticationService.getUserFromJwt();
+    private final UserRepository userRepository;
 
-        Path path = Paths.get("/uploads/picture/" + user.getUsername());
-        String pictureName = "/" + user.getUsername()+ "." + FilenameUtils.getExtension(picture.getOriginalFilename());
+    @Transactional
+    public void savePicture(MultipartFile picture, String username, String pictureDirectory) {
 
-        File directory = new File(path.toString());
+        String userFolder = "/uploads/" + username;
+        String pictureName = "/" + username+ "." + FilenameUtils.getExtension(picture.getOriginalFilename());
+        File directory = new File(userFolder + pictureDirectory);
+
         if(!directory.exists()){
             directory.mkdirs();
         }
 
         try {
-            byte[] pictureBytes = picture.getBytes();
-            System.out.println("PATH : " + path);
-            System.out.println("Picture Name : " + pictureName);
-            Path picturePath = Paths.get(path + pictureName);
-            System.out.println("Picture Path : " + picturePath);
+            byte[] profilePictureBytes = picture.getBytes();
+            Path picturePath = Paths.get(directory.getPath() + pictureName);
             FileUtils.cleanDirectory(directory);
-            Files.write(picturePath, pictureBytes);
+            Files.write(picturePath, profilePictureBytes);
+            UserEntity userEntity = this.userRepository.findByUsername(username).orElseThrow();
 
+            if(pictureDirectory.equals("/profilePicture"))
+                userEntity.setProfilePicturePath(picturePath.toAbsolutePath().toString());
+
+            else if(pictureDirectory.equals("/bannerPicture")){
+                userEntity.setBannerPicturePath(picturePath.toAbsolutePath().toString());
+                System.out.println("PATH : " + picturePath.toAbsolutePath());
+
+            }
+
+
+            this.userRepository.save(userEntity);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public UserDto getCurrentUser() {
 
-        UserEntity user = this.authenticationService.getUserFromJwt();
 
-        return UserDto.builder()
+    public UserDto getCurrentUser(String username) {
+
+        UserEntity user = this.userRepository.findByUsername(username).orElseThrow();
+
+
+
+        UserDto userDto = UserDto.builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .username(user.getUsername())
+                .bio(user.getBio())
+                .location(user.getLocation())
+                .personalWebsite(user.getPersonalWebsite())
+                .birthDate(user.getBirthDate())
                 .build();
+
+        return userDto;
+    }
+
+    public ByteArrayResource getPicture(String username, String directory) {
+
+        Path picturePath = this.fetchPicturePath(username, directory);
+        try {
+          ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(picturePath));
+          return resource;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public Path fetchPicturePath(String username, String directory){
+        UserEntity user = this.userRepository.findByUsername(username).orElseThrow();
+        Path picturePath = null;
+        if(directory.equals("/profilePicture"))
+             picturePath = Paths.get(user.getProfilePicturePath());
+
+        else if(directory.equals("/bannerPicture"))
+            picturePath = Paths.get(user.getBannerPicturePath());
+
+        return picturePath;
     }
 }
