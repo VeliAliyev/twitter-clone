@@ -54,12 +54,17 @@ public class TweetController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/isLiked")
+    @PostMapping("/is-liked")
     public ResponseEntity<Boolean> isLiked(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
          return ResponseEntity.ok(this.tweetService.isLiked(likeRetweetBookmarkDto));
     }
 
-    @PostMapping("/isBookmarked")
+    @GetMapping("/like-counter/{id}")
+    public ResponseEntity<Integer> likeCounter(@PathVariable(name = "id") Long id){
+        return ResponseEntity.ok(this.tweetService.likeCounter(id));
+    }
+
+    @PostMapping("/is-bookmarked")
     public ResponseEntity<Boolean> isBookmarked(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
         return ResponseEntity.ok(this.tweetService.isBookmarked(likeRetweetBookmarkDto));
     }
