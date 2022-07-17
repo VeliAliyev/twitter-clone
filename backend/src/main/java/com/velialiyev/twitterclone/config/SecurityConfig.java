@@ -68,6 +68,10 @@ public class SecurityConfig{
                 .authorizeRequests(authorize -> authorize
                         .antMatchers("/api/auth/**")
                         .permitAll()
+                        .antMatchers("/user/profilePicture/get/**")
+                        .permitAll()
+                        .antMatchers("/user/bannerPicture/get/**")
+                        .permitAll()
                         .anyRequest()
                         .authenticated())
 
