@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    </head>
+    <body class="container">
+        <form [formGroup]="form" (ngSubmit)="signIn()">
+            
+            <label>Username</label>
+            <div>
+                <span *ngIf="!form.get('username')?.valid && form.get('username')?.touched" style="color:red ;">Please enter a username</span>
+                <input  [formControlName]="'username'" type="text">
+            </div> 
+            <label>Password</label>
+            <div>
+                <span *ngIf="!form.get('password')?.valid && form.get('password')?.touched" style="color:red ;">Password cannot be empty</span>
+                <input  [formControlName]="'password'" type="password">
+            </div> 
+            
+            <input type="submit" value="Sign in">
+        </form>
+    </body>
+</html>

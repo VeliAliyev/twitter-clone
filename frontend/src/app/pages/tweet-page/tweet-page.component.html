@@ -1,0 +1,44 @@
+<body>
+    <header class="sidebar">
+        <app-navbar></app-navbar>
+    </header>
+    
+    <main class="main">
+        <div class="main-container">
+    
+            <!-- Tweet -->
+            <div class="tweet">
+                <app-tweet [counters]="true" [tweet]="tweet"></app-tweet>
+            </div>
+            <!--End Of Tweet -->
+    
+    
+            <!-- Reply Form -->
+            <div class="reply-form">
+    
+                <div *ngIf="isFocus">Replying to @{{tweet.username}}</div>
+    
+                <div>
+                    <form id="newReplyForm" [formGroup]="form" (ngSubmit)="reply()">
+                        <textarea [formControlName]="'text'" id="reply-form-text-area" class="reply-form__text-area"
+                            name="reply-form-text-area" rows="2" cols="50" placeholder="Tweet Your Reply"
+                            (click)="focus(true)"></textarea>
+                    </form>
+    
+                    <div class="reply-form__button-container"><input class="reply-form__button" type="submit"
+                            form="newReplyForm" value="Reply"></div>
+                </div>
+            </div>
+            <!-- End Of Reply Form -->
+    
+            <!-- Replies -->
+            <div class="replies">
+                <div class="reply" *ngFor="let reply of replies">
+                    <app-tweet [tweet]="reply"></app-tweet>
+                </div>
+            </div>
+            <!-- End Of Replies -->
+        </div>
+        <div class="trends"></div>
+    </main>
+</body>

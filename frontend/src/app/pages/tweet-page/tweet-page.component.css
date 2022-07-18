@@ -1,0 +1,24 @@
+body{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* Reply Form */
+
+.reply-form{
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
+
+.reply-form div{
+    display: flex;
+    align-items: center;
+}
+
+.reply, .reply-form, .tweet{
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+}

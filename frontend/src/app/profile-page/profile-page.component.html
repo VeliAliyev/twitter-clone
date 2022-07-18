@@ -1,62 +1,106 @@
 <body>
-    <div class="overlay" [style.display]="overlay.getValue() ? 'block':'none'" (click)="hideOverlay($event)">
+    <div class="overlay" [style.display]="isOverlay.getValue() ? 'block':'none'" (click)="hideOverlay($event)">
         <div class="overlay__reply">
-            
-            <img src="assets/images/header.jpg" alt="" class="header-photo hover" style="margin: 12px;" (click)="uploadBanner()">
-            <img src="assets/images/profile.png" alt="" class="profile-img hover" (click)="uploadProfilePicture()">
-            <form id="newProfileForm" [formGroup]="profileForm" class="overlay__form"  (ngSubmit)="save()">
-                <input type="text" [formControlName]="'name'"  placeholder="Name">
-                <textarea [formControlName]="'bio'" id="profile-form-text-area" name="reply-form-text-area" rows="2"
-                    cols="50" placeholder="Bio" ></textarea>
-                <input type="text" [formControlName]="'location'" placeholder="Location">
-                <input type="text" [formControlName]="'website'" placeholder="Website">
-                <input type="date" [formControlName]="'birthDate'" placeholder="Birth Date">
-                
-            </form>
-            
-            <div style="width: 90%; display:flex; justify-content: flex-end; margin-bottom: 12px;">
-                <input class="reply-form__button" type="submit" form="newProfileForm" value="Save">
+
+            <div *ngIf="!isUploadingBanner && !isUploadingProfilePicture">
+                <div>
+                    <input #bannerPictureInput style="display: none" type="file" (change)="onBannerPictureChanged($event)">
+                    <input #profilePictureInput style="display: none" type="file" (change)="onProfilePictureChanged($event)" #fileInput>
+
+                    <img *ngIf="bannerPicture" (click)="bannerPictureInput.click()" [src]="bannerPicture" alt="" class="header-photo hover"
+                        style="margin: 12px;">
+                    
+                    <img *ngIf="!bannerPicture" (click)="bannerPictureInput.click()" [src]="'http://localhost:8080/user/bannerPicture/get/'+ username" alt="" class="header-photo hover"
+                    style="margin: 12px;">
+                    <img *ngIf="profilePicture" (click)="profilePictureInput.click()" [src]="profilePicture" alt="" class="profile-img hover">
+                    <img *ngIf="!profilePicture" (click)="profilePictureInput.click()" [src]="'http://localhost:8080/user/profilePicture/get/'+ username" alt="" class="profile-img hover">
+                    
+                </div>
+                <form id="newProfileForm" [formGroup]="profileForm" class="overlay__form" (ngSubmit)="save()">
+                    <input type="text" [formControlName]="'firstName'" placeholder="First Name">
+                    <textarea [formControlName]="'bio'" id="profile-form-text-area" name="reply-form-text-area" rows="2"
+                        cols="50" placeholder="Bio"></textarea>
+                    <input type="text" [formControlName]="'location'" placeholder="Location">
+                    <input type="text" [formControlName]="'website'" placeholder="Website">
+                    <input type="date" [formControlName]="'birthDate'" placeholder="Birth Date">
+                </form>
+
+                <div style="width: 90%; display:flex; justify-content: flex-end; margin-bottom: 12px;">
+                    <input class="reply-form__button" type="submit" form="newProfileForm" value="Save">
+                </div>
             </div>
-        
+
+            <div *ngIf="isUploadingBanner">
+
+                <image-cropper 
+                    [imageChangedEvent]="bannerChangeEvt" 
+                    [maintainAspectRatio]="true" 
+                    [aspectRatio]="3/1"
+                    [resizeToWidth]="600" 
+                    format="png" 
+                    (imageCropped)="cropImg($event)" >
+                </image-cropper>
+
+                <button (click)="cropBanner()">Crop</button>
+            </div>
+
+            <div *ngIf="isUploadingProfilePicture">
+
+                <image-cropper 
+                    [imageChangedEvent]="profilePictureChangeEvt" 
+                    [maintainAspectRatio]="true" 
+                    [aspectRatio]="1/1"
+                    [resizeToWidth]="400" 
+                    format="png" 
+                    (imageCropped)="cropImg($event)" >
+                </image-cropper>
+
+                <button (click)="cropProfilePicture()">Crop</button>
+            </div>
+
         </div>
     </div>
 
     <header class="sidebar">
         <app-navbar></app-navbar>
     </header>
-    
-    <main class="main">  
-          <div class="main-container">
-              <div class="tweets-counter-container">Veli <span class="tweets-counter">154 Tweets</span></div>
-              <div>
-                <div class="header-photo">
-                    <img src="assets/images/header.jpg" alt="">
+
+    <main class="main">
+        <div class="main-container">
+            <div class="tweets-counter-container">{{user.firstName}} <span class="tweets-counter">154 Tweets</span></div>
+            <div>
+                <div >
+                    <img [src]="'http://localhost:8080/user/bannerPicture/get/'+ username" class="header-photo">
                 </div>
                 <div class="profile-section">
                     <div class="profile-img-container">
-                        <img src="assets/images/profile.png" class="profile-img" alt="">
+                        <img [src]="'http://localhost:8080/user/profilePicture/get/'+ username" class="profile-img">
                         <div (click)="showOverlay()" class="edit-button">Edit Profile</div>
                     </div>
                     <div style="padding-left:12px;">
-                        <div class="user-first-name">Veli</div>
-                        <div class="username">@veli_aliyev</div>
+                        <div class="user-first-name">{{user.firstName}}</div>
+                        <div class="username">{{user.username}}</div>
                     </div>
                     <div></div>
                     <div></div>
-                    
+
                 </div>
-              </div>
-              <div class="navbar">
-                <div class="navbar-item" (click)="fetchTweets()" [routerLink]="'/profile/tweets'" [ngClass]="{'active': url === '/profile/tweets'}">Tweets</div>
-                <div class="navbar-item" (click)="fetchRetweets()"  [routerLink]="'/profile/retweets'" [ngClass]="{'active': url === '/profile/retweets'}">Retweets & Quotes</div>
-                <div class="navbar-item" [routerLink]="'/profile/replies'" [ngClass]="{'active': url === '/profile/replies'}">Replies</div>
-                <div class="navbar-item" [routerLink]="'/profile/likes'"  [ngClass]="{'active': url === '/profile/likes'}">Likes</div>
-              </div>
-              <div>
+            </div>
+            <div class="navbar">
+                <div class="navbar-item" (click)="fetchTweets()" [routerLink]="'/profile/tweets'"
+                    [ngClass]="{'active': url === '/profile/tweets'}">Tweets</div>
+                <div class="navbar-item" (click)="fetchRetweets()" [routerLink]="'/profile/retweets'"
+                    [ngClass]="{'active': url === '/profile/retweets'}">Retweets & Quotes</div>
+                <div class="navbar-item" [routerLink]="'/profile/replies'"
+                    [ngClass]="{'active': url === '/profile/replies'}">Replies</div>
+                <div class="navbar-item" [routerLink]="'/profile/likes'"
+                    [ngClass]="{'active': url === '/profile/likes'}">Likes</div>
+            </div>
+            <div>
                 <div *ngFor="let tweet of tweets" class="tweets">
                     <app-tweet [tweet]="tweet"></app-tweet>
                 </div>
-              </div>
+            </div>
         </div>
         <div class="trends"></div>
     </main>

@@ -1,0 +1,14 @@
+<html>
+    <body>
+        <header class="sidebar">
+            <app-navbar></app-navbar>
+        </header>
+        <main  class="main">
+            <div class="main-container">
+                <div class="tweet" *ngFor="let tweet of tweets" >
+                    <app-tweet [tweet]="tweet"></app-tweet>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

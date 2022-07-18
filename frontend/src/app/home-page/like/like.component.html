@@ -1,8 +1,8 @@
 <div class="tweet-footer__icons">
     
-    <fa-icon *ngIf="!isLiked.getValue()" (click)="like(tweet.id)"  class="tweet-footer__icon" [icon]="faHeart">
+    <fa-icon *ngIf="!isLiked.getValue()" (click)="like(tweetId)"  class="tweet-footer__icon" [icon]="faHeart">
     </fa-icon>
-    <fa-icon *ngIf="isLiked.getValue()" (click)="like(tweet.id)"  class="tweet-footer__icon" [icon]="faSolidHeart" [style.color]="'rgb(249, 24, 128)'">
+    <fa-icon *ngIf="isLiked.getValue()" (click)="like(tweetId)"  class="tweet-footer__icon" [icon]="faSolidHeart" [style.color]="'rgb(249, 24, 128)'">
     </fa-icon>
-    {{tweet.likeCounter}}
+    {{likeCounter}}
 </div>

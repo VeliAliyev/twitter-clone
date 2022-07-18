@@ -1,0 +1,124 @@
+body{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tweets-counter-container{
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+}
+
+.tweets-counter{
+    font-weight: 400;
+    color: gray;
+}
+
+.header-photo{
+    height: 200px;
+    width: 600px;
+}
+
+.profile-img{
+    width: 130px;
+    height: auto;
+    border-radius: 80px;
+    margin-top: -80px;
+    margin-left: 20px;
+    border: 3px solid white;
+}
+
+.profile-img-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-first-name{
+    font-weight: 700;
+    font-size: 28px;
+}
+.username{
+    color: gray;
+}
+
+.navbar{
+    
+    margin-top: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-item{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+}
+
+.navbar-item:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.active{
+    border-top: 3px solid #1D9BF0;
+}
+
+.tweets{
+    border: 1px solid lightgray;
+    border-bottom: none;
+}
+
+.overlay{
+    z-index: 5;
+}
+
+.overlay__reply{
+    
+    height: 650px;
+    width: 650px;
+    overflow-y: scroll;
+    
+    
+}
+
+.overlay__form{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 12px;
+    
+}
+
+.overlay__form input{
+    height: 30px;
+    font-size: 24px;
+}
+
+.overlay__form textarea{
+    height: 65px;
+    font-size: 24px;
+    resize: none;
+}
+
+.edit-button{
+    text-align: center;
+    border: 1px solid gray;
+    font-weight: 700;
+    padding: 12px 5px; 
+    width: 100px;
+    border-radius: 35%;
+    
+}
+
+.edit-button:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.hover:hover{
+    cursor: pointer;
+}

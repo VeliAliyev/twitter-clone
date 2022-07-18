@@ -1,0 +1,9 @@
+body{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tweet{
+    border: solid 1px lightgray;
+    border-top: none;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    </head>
+    <body class="container">
+        <form [formGroup]="form" (ngSubmit)="signUp()">
+            <label>First Name</label>
+            <div>
+                <span *ngIf="!form.get('firstName')?.valid && form.get('firstName')?.touched" style="color:red ;">Please enter your first name</span>
+                <input [formControlName]="'firstName'" type="text">
+            </div>
+            
+            <label>Last Name</label>
+            <div>
+                <span *ngIf="!form.get('lastName')?.valid && form.get('lastName')?.touched" style="color:red ;">Please enter your last name</span>
+                <input  [formControlName]="'lastName'" type="text">
+            </div> 
+            
+            <label>Username</label>
+            <div>
+                <span *ngIf="username.errors?.['required'] && form.get('username')?.touched" style="color:red ;">Please enter a username</span>
+                <span *ngIf="username.errors?.['usernameExists']" style="color:red ;">This username has been taken</span>
+                <input  [formControlName]="'username'" type="text">
+            </div> 
+            <label>Email</label>
+            <div>
+                <span *ngIf="!form.get('email')?.valid && form.get('email')?.touched" style="color:red ;">Please enter a valid email</span>
+                <input  [formControlName]="'email'" type="email" required autofocus>
+            </div>
+           
+            <label>Password</label>
+            <div>
+                <span *ngIf="!form.get('password')?.valid && form.get('password')?.touched" style="color:red ;">Password cannot be empty</span>
+                <input  [formControlName]="'password'" type="password">
+            </div> 
+            
+            <input type="submit" value="Sign up">
+        </form>
+    </body>
+</html>

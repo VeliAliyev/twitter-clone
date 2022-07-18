@@ -1,0 +1,9 @@
+<div class="tweet-footer__icons">
+
+    <fa-icon *ngIf="!isActive" (click)="bookmark()" class="tweet-footer__icon" [icon]="faIcon">
+    </fa-icon>
+    <fa-icon *ngIf="isActive" (click)="bookmark()" class="tweet-footer__icon" [icon]="faSolidIcon"
+        [style.color]="'rgb(29, 155, 240)'">
+    </fa-icon>
+
+</div>

@@ -1,42 +1,27 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { TweetResponsePayload } from '../home-page/tweet-response.payload';
+import { Router } from '@angular/router';
+import { TweetInput } from '../tweet-input';
 
 @Component({
   selector: 'app-tweet',
   templateUrl: './tweet.component.html',
   styleUrls: ['./tweet.component.css']
 })
-export class TweetComponent implements OnInit {
-  @Input() tweet: TweetResponsePayload;
+export class TweetComponent extends TweetInput implements OnInit {
+
   @Input() footer: Boolean = true;
   @Input() counters: Boolean = false;
 
- 
   constructor(private router: Router) { 
-    this.tweet = {
-      id: 0,
-      firstName: "",
-      lastName: "",
-      username: "",
-      duration: "",
-      tweetText: "",
-      replyCounter: 0,
-      retweetCounter: 0,
-      likeCounter: 0,
-    
-      }
-      
-      
+    super();
   }
 
   ngOnInit(): void {
   }
 
- 
-
-
   goToTweet(tweetId: number){
-    this.router.navigateByUrl("/tweet/" + tweetId);
+    
+    this.router.navigate(["/tweet/" + tweetId], {state: {data: this.tweet}});
   }
+
 }

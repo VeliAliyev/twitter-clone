@@ -14,6 +14,11 @@ body{
     color: gray;
 }
 
+.header-photo{
+    height: 200px;
+    width: 600px;
+}
+
 .profile-img{
     width: 130px;
     height: auto;
@@ -69,7 +74,9 @@ body{
 .overlay__reply{
     
     height: 650px;
-    width: 600px;
+    width: 650px;
+    overflow-y: scroll;
+    
     
 }
 

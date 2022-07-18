@@ -1,5 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
-*{
+.dropdown-item{
+    margin: 12px;
+  }
+
+  .dropdown-item:hover{
+    cursor: pointer;
+  }
+
+  *{
     font-family: Roboto;
 }
 
@@ -17,7 +24,6 @@ html, body{
 }
 
 .main-container{
-    
     width: 600px;
     height: 100%;
 }
@@ -108,6 +114,8 @@ html, body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    
 }
 
 .tweet-icon, .tweet-footer__icon{
@@ -147,6 +155,7 @@ html, body{
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.3);
+    z-index: 5;
   }
   
   .overlay__reply{
@@ -161,10 +170,9 @@ html, body{
     height: fit-content;
     width: 30%;
     border-radius: 18px;
-  
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
   }
   
  

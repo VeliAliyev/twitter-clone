@@ -1,32 +1,43 @@
 
     <div class="sidebar-container">
         <div>
-            <img src="assets/svg/twitter.svg" class="logo">
+            <div>
+                <img src="assets/svg/twitter.svg" class="logo">
+            </div>
+            <div class="sidebar-item active" [ngClass]="{'active': getUrl() === '/home'}">
+                <img src="assets/svg/home.svg" class="sidebar-item-icon ">
+                <div [routerLink]="'/home'" class="icon-label">Home</div>
+            </div>
+            <div class="sidebar-item">
+                <img src="assets/svg/explore.svg" class="sidebar-item-icon">
+                <div class="icon-label">Explore</div>
+            </div>
+            <div class="sidebar-item">
+                <img src="assets/svg/notifications.svg" class="sidebar-item-icon">
+                <div class="icon-label">Notification</div>
+            </div>
+            <div class="sidebar-item">
+                <img src="assets/svg/messages.svg" class="sidebar-item-icon">
+                <div class="icon-label">Messages</div>
+            </div>
+    
+            <div class="sidebar-item " [ngClass]="{'active': getUrl() === '/bookmarks'}">
+                <img src="assets/svg/bookmark.svg" class="sidebar-item-icon ">
+                <div [routerLink]="'/bookmarks'" class="icon-label">Bookmarks</div>
+            </div>
+    
+            <div [routerLink]="'/profile/tweets'" class="sidebar-item" 
+            [ngClass]="{'active': getUrl() === '/profile/tweets' || getUrl() === '/profile/retweets' || getUrl() === '/profile/replies' || getUrl() === '/profile/likes'}">
+                <img src="assets/svg/profile.svg" class="sidebar-item-icon">
+                <div class="icon-label">Profile</div>
+            </div>
+            <div class="sidebar-item">
+                <img src="assets/svg/more.svg" class="sidebar-item-icon">
+                <div class="icon-label">More</div>
+            </div>
+            <div class="button">Tweet</div>
         </div>
-        <div class="sidebar-item active" [ngClass]="{'active': url === '/home'}">
-            <img src="assets/svg/home.svg" class="sidebar-item-icon ">
-            <div [routerLink]="'/home'" class="icon-label">Home</div>
+        <div>
+            <button class="logout-btn" (click)="logout()">Logout</button>
         </div>
-        <div class="sidebar-item">
-            <img src="assets/svg/explore.svg" class="sidebar-item-icon">
-            <div class="icon-label">Explore</div>
-        </div>
-        <div class="sidebar-item">
-            <img src="assets/svg/notifications.svg" class="sidebar-item-icon">
-            <div class="icon-label">Notification</div>
-        </div>
-        <div class="sidebar-item">
-            <img src="assets/svg/messages.svg" class="sidebar-item-icon">
-            <div class="icon-label">Messages</div>
-        </div>
-        <div [routerLink]="'/profile/tweets'" class="sidebar-item" 
-        [ngClass]="{'active': url === '/profile/tweets' || url === '/profile/retweets' || url === '/profile/replies' || url === '/profile/likes'}">
-            <img src="assets/svg/profile.svg" class="sidebar-item-icon">
-            <div class="icon-label">Profile</div>
-        </div>
-        <div class="sidebar-item">
-            <img src="assets/svg/more.svg" class="sidebar-item-icon">
-            <div class="icon-label">More</div>
-        </div>
-        <div class="button">Tweet</div>
     </div>

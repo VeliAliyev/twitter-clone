@@ -10,8 +10,6 @@ import { TweetResponsePayload } from './tweet-response.payload';
 })
 export class TweetService {
   
-  
-
   constructor(private http: HttpClient) { }
 
   tweet(payload: TweetRequestPayload){
@@ -38,19 +36,19 @@ export class TweetService {
      return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/tweets");
   }
 
-  getTweetsByUsername(username: string){
+  getTweetsByUsername(username: String){
     return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/tweets-by-username/" + username);
   }
 
-  getRetweetsByUsername(username: string){
+  getRetweetsByUsername(username: String){
     return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/retweets-by-username/" + username);
   }
 
-  getRepliesByUsername(username: string){
+  getRepliesByUsername(username: String){
     return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/replies-by-username/" + username);
   }
 
-  getLikesByUsername(username: string){
+  getLikesByUsername(username: String){
     return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/liked-by-username/" + username);
   }
 
@@ -74,6 +72,14 @@ export class TweetService {
     return this.http.post<boolean>("http://localhost:8080/tweet/isLiked", {tweetId: tweetId});
   }
 
-  
+  bookmark(tweetId: number){
+    return this.http.post("http://localhost:8080/tweet/bookmark", {tweetId: tweetId})
+  }
 
+  getBookmarks(username: string): Observable<Array<TweetResponsePayload>> {
+    return this.http.get<Array<TweetResponsePayload>>("http://localhost:8080/tweet/bookmarks/" + username);
+  }
+  isBookmarked(tweetId: number):Observable<boolean>{
+    return this.http.post<boolean>("http://localhost:8080/tweet/isBookmarked", {tweetId: tweetId});
+  }
 }

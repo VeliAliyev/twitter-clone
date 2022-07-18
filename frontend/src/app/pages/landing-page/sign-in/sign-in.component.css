@@ -1,0 +1,46 @@
+
+
+body, html{
+    height: 100vh;
+    font-family: Roboto;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+}
+
+.container form{
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+	text-transform: uppercase;
+	font-weight: 500;
+	letter-spacing: 3px;
+    width: 500px;
+}
+input[type=text], input[type=email], input[type=password], select, textarea {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-top: 6px;
+	margin-bottom: 16px;
+	resize: vertical;
+}
+input[type="submit"] {
+	background-color: #1d9bf0;
+	color: #fff;
+	padding: 15px 50px;
+	border: none;
+	border-radius: 50px;
+	cursor: pointer;
+	font-size: 15px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+}

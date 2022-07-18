@@ -1,0 +1,28 @@
+<div class="overlay" [style.display]="isOverlay ? 'block':'none'" (click)="hideOverlay($event)">
+  <div class="overlay__reply">
+
+      <form id="newQuoteForm" [formGroup]="form" class="overlay__form" (ngSubmit)="quote()">
+          <textarea [formControlName]="'text'" id="reply-form-text-area" class="reply-form__text-area"
+              name="reply-form-text-area" rows="2" cols="50" placeholder="Tweet Your Quote"></textarea>
+      </form>
+
+       <app-tweet [footer]="false" [tweet]="tweet"></app-tweet>
+
+      <div style="width: 90%; display:flex; justify-content: flex-end;">
+          <input class="reply-form__button" type="submit" form="newQuoteForm" value="Quote">
+      </div>
+  </div>
+</div>
+
+<div class="tweet-footer__icons">
+
+  <img src="/assets/svg/retweet.svg" (click)="show(true)" class="tweet-footer__icon dropbtn" [ngClass]="isActive ? 'green' : '' ">
+  {{tweet.retweetCounter}}
+  
+  <div class="dropdown">
+    <div class="dropdown-content" id="Mydropdown" [ngClass]="showDropdown ?'show': '' ">
+      <div (click)="retweet()" class="dropdown-item">Retweet</div>
+      <div (click)="showOverlay()" class="dropdown-item">Quote Tweet</div>
+    </div>
+  </div>
+</div>
