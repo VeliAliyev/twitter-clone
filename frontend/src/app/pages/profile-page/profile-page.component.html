@@ -21,7 +21,7 @@
                     <textarea [formControlName]="'bio'" id="profile-form-text-area" name="reply-form-text-area" rows="2"
                         cols="50" placeholder="Bio"></textarea>
                     <input type="text" [formControlName]="'location'" placeholder="Location">
-                    <input type="text" [formControlName]="'website'" placeholder="Website">
+                    <input type="text" [formControlName]="'personalWebsite'" placeholder="Website">
                     <input type="date" [formControlName]="'birthDate'" placeholder="Birth Date">
                 </form>
 
@@ -82,7 +82,7 @@
                         <div class="username">@{{user.username}}</div>
                         <div>{{user.location}}</div>
                         <div>{{user.bio}}</div>
-                        <div>{{user.personalWebsite}}</div>
+                        <div><a href="{{user.personalWebsite}}">{{user.personalWebsite}}</a></div>
                         <div>{{user.birthDate}}</div>
                     </div>
                     

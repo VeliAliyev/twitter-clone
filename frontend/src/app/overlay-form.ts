@@ -26,7 +26,7 @@ export abstract class OverlayForm extends TweetInput {
       firstName: new FormControl(""),
       bio: new FormControl(""),
       location: new FormControl(""),
-      website: new FormControl(""),
+      personalWebsite: new FormControl(""),
       birthDate: new FormControl(""),
     })
   }

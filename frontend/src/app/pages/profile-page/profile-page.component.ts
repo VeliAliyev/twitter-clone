@@ -60,7 +60,7 @@ export class ProfilePageComponent extends OverlayForm implements OnInit {
         firstName: this.user.firstName,
         bio: this.user.bio,
         location: this.user.location,
-        website: this.user.personalWebsite,
+        personalWebsite: this.user.personalWebsite,
         birthDate: this.user.birthDate
       })
     });

@@ -11,14 +11,14 @@ export class BookmarkService {
   constructor(private http: HttpClient) { }
   
   isBookmarked(tweetId: number): Observable<boolean>{
-    return this.http.post<boolean>("http://localhost:8080/tweet/is-bookmarked", {tweetId: tweetId});
+    return this.http.post<boolean>("http://localhost:8080/bookmarks/is-bookmarked", {tweetId: tweetId});
   }
   
   bookmark(tweetId: number){
-    return this.http.post("http://localhost:8080/tweet/bookmark", {tweetId: tweetId})
+    return this.http.post("http://localhost:8080/bookmarks/bookmark", {tweetId: tweetId})
   }
   
   getBookmarks(username: string): Observable<Array<PostResponse>> {
-    return this.http.get<Array<PostResponse>>("http://localhost:8080/tweet/bookmarks/" + username);
+    return this.http.get<Array<PostResponse>>("http://localhost:8080/bookmarks/" + username);
   }
 }

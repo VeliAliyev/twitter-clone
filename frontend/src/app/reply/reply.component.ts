@@ -25,7 +25,7 @@ export class ReplyComponent extends OverlayForm implements OnInit {
       type: "REPLY"
     }
 
-    this.postService.post(this.payload).subscribe({
+    this.postService.tweet(this.payload).subscribe({
       complete() {
         self.form.reset();
         self.router.navigate(["/tweet/" + self.tweet.id], {state: {data: self.tweet}});

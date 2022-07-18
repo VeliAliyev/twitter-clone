@@ -69,7 +69,7 @@ export class RetweetComponent extends OverlayForm implements OnInit {
       tweetId: this.tweet.id,
       type: "QUOTE"
     }
-    this.postService.post(this.payload).subscribe({
+    this.postService.tweet(this.payload).subscribe({
       complete() {
         self.router.navigateByUrl("home");
        self.form.reset();

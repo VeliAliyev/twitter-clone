@@ -83,7 +83,7 @@ export class HomePageComponent implements OnInit {
     this.payload.text = this.newTweetForm.get("text")?.value;
     this.payload.type = "TWEET";
     const self = this;
-    this.postService.post(this.payload).subscribe({
+    this.postService.tweet(this.payload).subscribe({
       next(response) {
         console.log(response)
         self.newTweetForm.reset();

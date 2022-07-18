@@ -58,7 +58,7 @@ export class TweetPageComponent extends OverlayForm implements OnInit {
     }
 
     const self = this;
-    this.postService.post(this.payload).subscribe({
+    this.postService.tweet(this.payload).subscribe({
       complete(){
         self.form.reset();
         self.router.navigate(["/tweet/" + self.tweet.id], {state: {data: self.tweet}});

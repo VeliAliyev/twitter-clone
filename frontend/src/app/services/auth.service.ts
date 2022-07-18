@@ -16,12 +16,12 @@ export class AuthService {
   constructor(private http: HttpClient, private localStorage: LocalStorageService, private router: Router) { }
   
   signUp(payload: SignUpPayload) {
-    return this.http.post("http://localhost:8080/api/auth/sign-up", payload);
+    return this.http.post("http://localhost:8080/auth/sign-up", payload);
   }
   
   signIn(payload: SignInRequestPayload) {
     const self = this;
-    return this.http.post<SignInResponsePayload>("http://localhost:8080/api/auth/sign-in", payload).pipe<SignInResponsePayload>(
+    return this.http.post<SignInResponsePayload>("http://localhost:8080/auth/sign-in", payload).pipe<SignInResponsePayload>(
       map(response=>{
         self.localStorage.store("accessToken", response.accessToken);
         self.localStorage.store("refreshToken", response.refreshToken);
@@ -35,7 +35,7 @@ export class AuthService {
   
   logout() {
     const self = this;
-    return this.http.post("http://localhost:8080/api/auth/logout", {username: this.getUsername(), refreshToken: this.localStorage.retrieve("refreshToken")}).subscribe({complete(){
+    return this.http.post("http://localhost:8080/auth/logout", {username: this.getUsername(), refreshToken: this.localStorage.retrieve("refreshToken")}).subscribe({complete(){
 
       self.localStorage.clear('accessToken');
       self.localStorage.clear('refreshToken');
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   refreshAccessToken(): Observable<SignInResponsePayload> {
-    return this.http.post<SignInResponsePayload>("http://localhost:8080/api/auth/refresh-token", {
+    return this.http.post<SignInResponsePayload>("http://localhost:8080/auth/refresh-token", {
       refreshToken: this.localStorage.retrieve("refreshToken"),
       username: this.getUsername()
     }).pipe(tap(response=>{
@@ -69,6 +69,6 @@ export class AuthService {
   }
   
   findAllUsernames(): Observable<String[]> {
-    return this.http.get<String[]>("http://localhost:8080/api/auth/usernames");
+    return this.http.get<String[]>("http://localhost:8080/auth/usernames");
   }
 }

@@ -40,6 +40,7 @@ export class UserService {
   }
 
   editProfile(payload: any){
+    console.log(payload)
     return this.http.post("http://localhost:8080/user/edit-profile", payload)
   }
 
