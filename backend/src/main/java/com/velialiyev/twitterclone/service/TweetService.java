@@ -277,4 +277,15 @@ public class TweetService {
         TweetEntity tweet = this.tweetRepository.findById(likeRetweetBookmarkDto.getTweetId()).orElseThrow();
         return this.bookmarkRepository.findByUserAndTweet(user, tweet).isPresent();
     }
+
+    public Integer likeCounter(Long id) {
+        return this.tweetRepository.findById(id).orElseThrow().getLikeCounter();
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isRetweeted(LikeRetweetBookmarkDto likeRetweetBookmarkDto) {
+        UserEntity user = this.authenticationService.getUserFromJwt();
+        TweetEntity tweet = this.tweetRepository.findById(likeRetweetBookmarkDto.getTweetId()).orElseThrow();
+        return this.retweetRepository.findByUserAndTweet(user, tweet).isPresent();
+    }
 }
