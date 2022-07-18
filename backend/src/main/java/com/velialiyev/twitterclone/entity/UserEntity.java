@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 
 @Entity
@@ -44,10 +45,10 @@ public class UserEntity {
     @NotNull
     private String password;
 
-    private String profileBanner;
-    private String profilePicture;
+    private String bannerPicturePath;
+    private String profilePicturePath;
     private String bio;
     private String location;
     private String personalWebsite;
-    private SimpleDateFormat birthDate;
+    private String birthDate;
 }

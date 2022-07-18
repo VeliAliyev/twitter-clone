@@ -1,6 +1,7 @@
 package com.velialiyev.twitterclone.dto;
 
 import lombok.*;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
@@ -11,8 +12,6 @@ import java.text.SimpleDateFormat;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    private String bannerPicture;
-    private MultipartFile profilePicture;
     private String firstName;
     private String lastName;
     private String username;
