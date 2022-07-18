@@ -61,10 +61,14 @@ public class UserController {
 
 
     @GetMapping("{username}")
-    public ResponseEntity<UserDto> getCurrentUser(@PathVariable(name = "username") String username){
-        return ResponseEntity.ok(this.userService.getCurrentUser(username));
+    public ResponseEntity<UserDto> getUser(@PathVariable(name = "username") String username){
+        return ResponseEntity.ok(this.userService.getUser(username));
     }
 
+    @PostMapping("/edit-profile")
+    public void editProfile(@RequestBody UserDto user){
+        this.userService.editProfile(user);
+    }
 
 
 
