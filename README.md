@@ -16,7 +16,7 @@ User can view all posts stored in database, create new tweet via tweet form, ret
 This page opens when user clicks on a post. Here user can view the post and all replies to it and create a reply via reply form.
 
 ## Profile Page
-In this page User can update his personal information such as name, bio, location personal website and birthdate. 
+In this page User can update his personal information such as name, bio, location, personal website and birthdate. 
 Also, He/She can upload a profile picture and a banner picture. Additionally, user can view his/her tweets, replies, retweets and liked tweets via respective tabs.
 
 ## Bookmarks Page
