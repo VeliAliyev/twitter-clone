@@ -72,6 +72,13 @@ public class SecurityConfig{
                         .permitAll()
                         .antMatchers("/user/banner-picture/get/**")
                         .permitAll()
+                        .antMatchers("/v2/api-docs",
+                                "/configuration/ui",
+                                "/swagger-resources/**",
+                                "/configuration/security",
+                                "/swagger-ui.html",
+                                "/webjars/**")
+                        .permitAll()
                         .anyRequest()
                         .authenticated())
 
