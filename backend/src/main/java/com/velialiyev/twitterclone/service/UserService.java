@@ -62,7 +62,7 @@ public class UserService {
 
 
 
-    public UserDto getCurrentUser(String username) {
+    public UserDto getUser(String username) {
 
         UserEntity user = this.userRepository.findByUsername(username).orElseThrow();
 
@@ -104,5 +104,15 @@ public class UserService {
             picturePath = Paths.get(user.getBannerPicturePath());
 
         return picturePath;
+    }
+
+    public void editProfile(UserDto user) {
+        UserEntity userEntity = this.userRepository.findByUsername(user.getUsername()).orElseThrow();
+        userEntity.setFirstName(user.getFirstName());
+        userEntity.setBio(user.getBio());
+        userEntity.setBirthDate(user.getBirthDate());
+        userEntity.setLocation(user.getLocation());
+        userEntity.setPersonalWebsite(user.getPersonalWebsite());
+        this.userRepository.save(userEntity);
     }
 }
