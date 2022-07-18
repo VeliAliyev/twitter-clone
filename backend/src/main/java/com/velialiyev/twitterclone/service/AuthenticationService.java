@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,8 +27,10 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserService userService;
 
     public void signup(SignUpRequestDto signUpRequestDto){
+
         userRepository.save(
                 UserEntity.builder()
                         .firstName(signUpRequestDto.getFirstName())
@@ -35,8 +38,11 @@ public class AuthenticationService {
                         .username(signUpRequestDto.getUsername())
                         .email(signUpRequestDto.getEmail())
                         .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
+                        .profilePicturePath("C:/uploads/DummyProfilePicture.jpg")
+                        .bannerPicturePath("C:/uploads/DummyBannerPicture.jpg")
                         .build()
         );
+
     }
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto){
@@ -51,6 +57,7 @@ public class AuthenticationService {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .username(username)
+                .expiresAt(Instant.now().plusMillis(jwtService.getJwtExpirationInMillis()))
                 .build();
     }
 
@@ -66,6 +73,7 @@ public class AuthenticationService {
                 .accessToken(accessToken)
                 .refreshToken(refreshTokenDto.getRefreshToken())
                 .username(refreshTokenDto.getUsername())
+                .expiresAt(Instant.now().plusMillis(jwtService.getJwtExpirationInMillis()))
                 .build();
     }
 
