@@ -13,13 +13,13 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/tweet")
+@RequestMapping("/posts")
 @RequiredArgsConstructor
 public class TweetController {
 
     private final TweetService tweetService;
 
-    @PostMapping("/post")
+    @PostMapping("/create")
     public ResponseEntity<HttpStatus> createTweet(@RequestBody TweetDto tweetDto){
         this.tweetService.tweet(tweetDto);
         return ResponseEntity.ok().build();
@@ -29,49 +29,6 @@ public class TweetController {
     public ResponseEntity<HttpStatus> deleteTweet(@PathVariable(name = "id") Long id){
         this.tweetService.deleteTweet(id);
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/like")
-    public ResponseEntity<HttpStatus> like(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
-        this.tweetService.like(likeRetweetBookmarkDto);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/bookmark")
-    public ResponseEntity<HttpStatus> bookmark(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
-        this.tweetService.bookmark(likeRetweetBookmarkDto);
-        return ResponseEntity.ok().build();
-    }
-    @GetMapping("/bookmarks/{username}")
-    public ResponseEntity<List<TweetResponseDto>> getBookmarks(@PathVariable String username){
-
-        return ResponseEntity.ok(this.tweetService.getBookmarksByUsername(username));
-    }
-
-    @PostMapping("/retweet")
-    public ResponseEntity<HttpStatus> postRetweet(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
-        this.tweetService.retweet(likeRetweetBookmarkDto);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/is-liked")
-    public ResponseEntity<Boolean> isLiked(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
-         return ResponseEntity.ok(this.tweetService.isLiked(likeRetweetBookmarkDto));
-    }
-
-    @GetMapping("/like-counter/{id}")
-    public ResponseEntity<Integer> likeCounter(@PathVariable(name = "id") Long id){
-        return ResponseEntity.ok(this.tweetService.likeCounter(id));
-    }
-
-    @PostMapping("/is-bookmarked")
-    public ResponseEntity<Boolean> isBookmarked(@RequestBody LikeRetweetBookmarkDto likeRetweetBookmarkDto){
-        return ResponseEntity.ok(this.tweetService.isBookmarked(likeRetweetBookmarkDto));
-    }
-
-    @GetMapping("/tweets")
-    public ResponseEntity<List<TweetResponseDto>> getAllTweets(){
-        return ResponseEntity.ok( this.tweetService.getAllTweets());
     }
 
     @GetMapping("/tweets-by-username/{username}")
@@ -94,16 +51,10 @@ public class TweetController {
         return ResponseEntity.ok( this.tweetService.getLikedByUsername(username));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<TweetResponseDto>> getAll(){
         List<TweetResponseDto> tweets = this.tweetService.getAll();
         return ResponseEntity.ok(tweets);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<TweetResponseDto> getTweet(@PathVariable(name = "id") Long id){
-        TweetResponseDto tweet = this.tweetService.getTweet(id);
-        return ResponseEntity.ok(tweet);
     }
 
     @GetMapping("/replies-for-tweet/{id}")
