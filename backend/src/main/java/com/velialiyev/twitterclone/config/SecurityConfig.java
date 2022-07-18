@@ -66,11 +66,11 @@ public class SecurityConfig{
         httpSecurity
                 .cors().and().csrf().disable()
                 .authorizeRequests(authorize -> authorize
-                        .antMatchers("/api/auth/**")
+                        .antMatchers("/auth/**")
                         .permitAll()
-                        .antMatchers("/user/profilePicture/get/**")
+                        .antMatchers("/user/profile-picture/get/**")
                         .permitAll()
-                        .antMatchers("/user/bannerPicture/get/**")
+                        .antMatchers("/user/banner-picture/get/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
