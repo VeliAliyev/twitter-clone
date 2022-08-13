@@ -1,7 +1,7 @@
 # Twitter Clone
 This project is made with Spring Boot and Angular.
 
-[DEMO](https://drive.google.com/file/d/1gd3aFiOl4y7Gwu7uUm1yL0vwehWebRWF/view?usp=sharing)
+[DEMO](https://youtu.be/XzibvGUH66o)
 
 # Technologies
 Spring Boot 2.7.0
